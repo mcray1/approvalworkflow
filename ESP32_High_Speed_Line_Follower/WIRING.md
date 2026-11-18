@@ -18,20 +18,23 @@ pin, change it in `config.h`, not only here.**
 
 | Array channel (L→R) | ESP32 GPIO |
 |---------------------|-----------|
-| Sensor 1            | GPIO13 |
-| Sensor 2            | GPIO14 |
-| Sensor 3            | GPIO16 |
-| Sensor 4            | GPIO17 |
-| Sensor 5            | GPIO18 |
-| Sensor 6            | GPIO19 |
-| Sensor 7            | GPIO21 |
-| Sensor 8            | GPIO22 |
+| Sensor 1            | GPIO16 |
+| Sensor 2            | GPIO17 |
+| Sensor 3            | GPIO18 |
+| Sensor 4            | GPIO19 |
+| Sensor 5            | GPIO21 |
+| Sensor 6            | GPIO22 |
+| Sensor 7            | GPIO23 |
+| Sensor 8            | GPIO4  |
 
 - QTR-8RC `VCC` → 3.3 V (the classic QTR-8RC runs at 3.3–5 V; **drive it from
   3.3 V** so its digital lines never exceed the ESP32's 3.3 V limit).
 - QTR-8RC `GND` → common ground.
-- QTR `LEDON`/`CTRL` → tie high for always-on emitters, **or** wire to a spare
-  GPIO and set `SENSOR_EMITTER_PIN` in `config.h` (default: always on).
+- QTR `LEDON`/`CTRL` → **tie HIGH to 3.3 V** (emitters always on). The firmware
+  does not software-control the emitter (`SENSOR_EMITTER_PIN = 0xFF`), which is
+  what lets GPIO4 serve as sensor 8. If you later want software emitter control,
+  wire LEDON to a spare GPIO and set `SENSOR_EMITTER_PIN` — it must not reuse a
+  sensor/motor/button pin.
 
 > **Do not** feed 5 V into any ESP32 GPIO. If you power the QTR board from 5 V,
 > its output highs become 5 V and will damage 3.3 V-only ESP32 inputs. Keep the
@@ -41,12 +44,12 @@ pin, change it in `config.h`, not only here.**
 
 | TB6612 pin | Connect to | ESP32 GPIO |
 |-----------|------------|-----------|
-| AIN1  | Left motor dir 1  | GPIO25 |
-| AIN2  | Left motor dir 2  | GPIO26 |
-| PWMA  | Left motor PWM    | GPIO27 |
-| BIN1  | Right motor dir 1 | GPIO32 |
-| BIN2  | Right motor dir 2 | GPIO33 |
-| PWMB  | Right motor PWM   | GPIO23 |
+| PWMA  | Left motor PWM    | GPIO25 |
+| AIN1  | Left motor dir 1  | GPIO26 |
+| AIN2  | Left motor dir 2  | GPIO27 |
+| PWMB  | Right motor PWM   | GPIO14 |
+| BIN1  | Right motor dir 1 | GPIO12 ⚠️ strapping pin |
+| BIN2  | Right motor dir 2 | GPIO13 |
 | STBY  | Enable            | 3.3 V (default) **or** a GPIO if `USE_STBY_PIN` |
 | VCC   | Logic supply      | 3.3 V (match ESP32 logic) |
 | VM    | **Motor supply**  | Battery motor voltage (**CONFIRM**) |
@@ -57,6 +60,13 @@ pin, change it in `config.h`, not only here.**
 - `STBY` **must be HIGH** for any motion. Default firmware ties it to 3.3 V. To
   control standby in software, set `USE_STBY_PIN = true` and wire `STBY` to
   `MOTOR_STBY_PIN` (default GPIO15).
+- ⚠️ **GPIO12 (BIN1) is a strapping pin** (selects flash voltage at reset). It
+  matches the existing working wiring and is fine on boards where GPIO12 is low
+  at boot, but if the ESP32 ever fails to boot with the driver connected, move
+  BIN1 to a non-strapping output (e.g. GPIO33) and update `MOTOR_R_IN1_PIN`.
+- For reliable 3.3 V logic levels, power the TB6612 `VCC` from **3.3 V**. `STBY`
+  may be tied to 3.3 V (or 5 V) as long as it reads HIGH; keep motor-direction
+  input thresholds in mind if you run `VCC` at 5 V.
 
 ### Start/Stop button
 

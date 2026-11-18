@@ -38,8 +38,12 @@ constexpr uint8_t  SENSOR_COUNT        = 8;
 // GPIO assignment for the 8 sensors, left-to-right across the robot front.
 // Index 0 is the LEFT-most sensor, index 7 the RIGHT-most. If your array is
 // physically mirrored, either re-order this list or set SENSOR_FLIP below.
+//
+// These are the pins from the user's existing/working sketch. Sensor 8 uses
+// GPIO4; the emitter (LEDON/CTRL) is NOT software-controlled here (see
+// SENSOR_EMITTER_PIN) so GPIO4 is free to serve as a sensor channel.
 constexpr uint8_t  SENSOR_PINS[SENSOR_COUNT] = {
-  13, 14, 16, 17, 18, 19, 21, 22
+  16, 17, 18, 19, 21, 22, 23, 4
 };
 
 // If the physical left/right orientation of the array is reversed relative to
@@ -47,9 +51,14 @@ constexpr uint8_t  SENSOR_PINS[SENSOR_COUNT] = {
 // software (0 = left, 7000 = right is always preserved).
 constexpr bool     SENSOR_FLIP         = false;
 
-// Emitter control pin for the QTR board (LEDON / CTRL). Set to 255 (0xFF) to
-// leave emitters always on (tie LEDON high on the board). CONFIRM wiring.
-constexpr uint8_t  SENSOR_EMITTER_PIN  = 0xFF;   // 0xFF = not used
+// Emitter control pin for the QTR board (LEDON / CTRL).
+//   Left at 0xFF so the firmware does NOT drive the emitter. TIE THE QTR
+//   LEDON/CTRL PIN HIGH (to 3.3 V) in hardware so the IR emitters stay on.
+//   This is what frees GPIO4 above to be used as sensor 8 (the original sketch
+//   wrongly used GPIO4 for both). If you later want software emitter control,
+//   wire LEDON to a spare GPIO and set it here instead (must NOT be a pin
+//   already in SENSOR_PINS or the motor/button pins).
+constexpr uint8_t  SENSOR_EMITTER_PIN  = 0xFF;   // 0xFF = not used (tie high)
 
 // RC discharge read timeout in microseconds. Larger = more sensitive but
 // slower. 2500 us is the QTRSensors default; lower it if loop timing demands.
@@ -94,15 +103,18 @@ constexpr uint8_t  LINE_FOUND_DEBOUNCE = 3;
 //  3. MOTOR DRIVER (TB6612FNG)
 // =============================================================================
 
-// Left motor (channel A)
-constexpr uint8_t  MOTOR_L_IN1_PIN     = 25;     // AIN1
-constexpr uint8_t  MOTOR_L_IN2_PIN     = 26;     // AIN2
-constexpr uint8_t  MOTOR_L_PWM_PIN     = 27;     // PWMA
+// Left motor (channel A)  -- pins from the user's existing/working sketch.
+constexpr uint8_t  MOTOR_L_IN1_PIN     = 26;     // AIN1
+constexpr uint8_t  MOTOR_L_IN2_PIN     = 27;     // AIN2
+constexpr uint8_t  MOTOR_L_PWM_PIN     = 25;     // PWMA
 
 // Right motor (channel B)
-constexpr uint8_t  MOTOR_R_IN1_PIN     = 32;     // BIN1
-constexpr uint8_t  MOTOR_R_IN2_PIN     = 33;     // BIN2
-constexpr uint8_t  MOTOR_R_PWM_PIN     = 23;     // PWMB
+// NOTE: BIN1 is on GPIO12, an ESP32 strapping pin (flash-voltage select). This
+// matches the user's working wiring and boots fine on boards where GPIO12 is
+// low at reset. If you ever see boot failures, move BIN1 to e.g. GPIO33.
+constexpr uint8_t  MOTOR_R_IN1_PIN     = 12;     // BIN1  (strapping pin, see note)
+constexpr uint8_t  MOTOR_R_IN2_PIN     = 13;     // BIN2
+constexpr uint8_t  MOTOR_R_PWM_PIN     = 14;     // PWMB
 
 // Standby control. If USE_STBY_PIN is false, tie TB6612 STBY to 3.3V in
 // hardware. If true, MOTOR_STBY_PIN drives STBY (HIGH = enabled).
