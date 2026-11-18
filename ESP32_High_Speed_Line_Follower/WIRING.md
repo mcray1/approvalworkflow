@@ -20,6 +20,11 @@ the power distribution, common ground, and the GPIO34 button circuit.
 
 ![ESP32 line-follower wiring diagram](docs/wiring_diagram.svg)
 
+A **breadboard-style layout** (physical component placement) is in
+[`docs/wiring_breadboard.svg`](docs/wiring_breadboard.svg):
+
+![ESP32 line-follower breadboard layout](docs/wiring_breadboard.svg)
+
 ## 1. Pin table
 
 ### Sensors (QTR-8RC, RC/digital mode)
