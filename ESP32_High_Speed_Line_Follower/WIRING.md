@@ -102,27 +102,42 @@ GPIO34 floats and the button will read randomly.
 
 ## 2. Power architecture
 
+For a **12 V battery** (the assumed pack), the motor supply and the logic supply
+split right at the battery. The motors run on the full 12 V; the logic runs on
+3.3 V, reached via a **12 V→5 V buck converter** into the ESP32's 5V/VIN pin,
+whose on-board regulator then produces 3.3 V. **Never feed 12 V to VIN** — the
+ESP32's on-board 3.3 V regulator would overheat.
+
 ```
-            ┌───────────────┐
- Battery +──┤ VM (motors)   │  TB6612FNG
-            │               ├── AO1/AO2 → Left motor
- Battery −──┤ GND ──────────┤── BO1/BO2 → Right motor
-            └──────┬────────┘
-                   │ common ground
-   ┌───────────────┴───────────────┐
-   │ 3.3V regulator / ESP32 VIN     │  (regulated logic supply)
-   └───────────────┬───────────────┘
-                   │ 3.3V
-        ESP32 ◄────┘ ───► QTR-8RC VCC, TB6612 VCC, button pull-up
+ 12 V battery (+)──┬─────────────── 12 V ───────────────► TB6612 VM ──► motors
+                   │
+                   └── 12 V ──►[ Buck 12 V→5 V ]── 5 V ──► ESP32 5V/VIN
+                                                              │ (on-board 3.3 V reg)
+                                                     ESP32 3V3-out
+                                                              │ 3.3 V
+                                       ┌──────────────────────┼───────────────┐
+                                   QTR-8RC VCC          TB6612 VCC/STBY    GPIO34 pull-up
+                                   QTR-8RC LEDON
+
+ 12 V battery (−)────────────────── COMMON GND ───► ESP32 · QTR · TB6612 · buck
 ```
 
 Requirements:
-- **Common ground** across ESP32, TB6612, QTR board and battery negative.
-- Separate the **motor supply (VM)** from the **logic supply**. Motors inject
-  noise; brownouts reset the ESP32. Use a regulator rated for the ESP32 (the
-  DevKit's onboard regulator from `VIN`/`5V` is acceptable if your pack voltage
-  is within its input range — **CONFIRM**).
-- **Decoupling:** place a bulk electrolytic (≥ 470 µF, voltage-rated for VM)
+- **Common ground** across ESP32, TB6612, QTR board, buck converter and battery −.
+- **Motor supply = VM = 12 V** (direct from the pack). TB6612 `VM` is rated to
+  ~15 V, so 12 V is fine; **confirm your motors are rated for 12 V.**
+- **Logic supply via a 12 V→5 V buck** (DC-DC, e.g. LM2596) into ESP32 `5V`/`VIN`.
+  Size the buck for the ESP32 **plus** everything on the 3.3 V rail (QTR emitters
+  can draw ~100 mA) — a 1–2 A buck is comfortable. Do **not** run the ESP32 from
+  the 12 V pack directly, and do **not** use a linear regulator from 12 V (it
+  would dissipate a lot of heat).
+- **3.3 V comes from the ESP32's on-board regulator** (`3V3` pin) and feeds QTR
+  VCC + LEDON, TB6612 VCC + STBY and the button pull-up. If the on-board 3.3 V
+  regulator can't supply the QTR reliably, add a separate 3.3 V buck/LDO from the
+  5 V rail for the sensor board.
+- Separate the **motor supply (VM)** from the **logic supply** as above — motors
+  inject noise and brownouts reset the ESP32.
+- **Decoupling:** place a bulk electrolytic (≥ 470 µF, voltage-rated for 12 V)
   across `VM`/`GND` at the driver, plus a 0.1 µF ceramic close to `VCC`/`GND`.
 - Size the pack for stall current of both motors with margin (**CONFIRM** motor
   stall current from the datasheet).
@@ -130,6 +145,8 @@ Requirements:
 ## 3. Electrical precautions checklist
 
 - [ ] QTR logic at 3.3 V (no 5 V on ESP32 pins).
+- [ ] **12 V→5 V buck into ESP32 5V/VIN — never 12 V directly to VIN.**
+- [ ] Buck output ≈ 5 V under load; sized for ESP32 + QTR emitters.
 - [ ] External 10 kΩ pull-up on GPIO34.
 - [ ] `STBY` HIGH (or GPIO-controlled) — motors do nothing otherwise.
 - [ ] Common ground verified with a meter before applying motor power.

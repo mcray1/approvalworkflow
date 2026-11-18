@@ -176,44 +176,49 @@
   <text class="sub" x="486" y="784">Idle = HIGH (pulled up); pressed = LOW. GPIO34 is input-only → external pull-up required.</text>
 
   <!-- ===================== POWER INSET ===================== -->
-  <rect class="blk" x="50" y="560" width="380" height="330" rx="8"/>
-  <rect class="blkh" x="50" y="560" width="380" height="28" rx="8"/>
-  <text class="bt" x="240" y="580" text-anchor="middle">Power distribution</text>
+  <rect class="blk" x="50" y="560" width="410" height="330" rx="8"/>
+  <rect class="blkh" x="50" y="560" width="410" height="28" rx="8"/>
+  <text class="bt" x="255" y="580" text-anchor="middle">Power distribution</text>
 
   <!-- battery -->
-  <rect x="80" y="610" width="120" height="70" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
-  <text class="pinm" x="140" y="642" text-anchor="middle">Battery pack</text>
-  <text class="sub"  x="140" y="662" text-anchor="middle">(confirm V / chem.)</text>
-  <text class="pinm" x="206" y="622">+</text>
-  <text class="pinm" x="206" y="678">−</text>
+  <rect x="75" y="614" width="120" height="58" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
+  <text class="pinm" x="135" y="640" text-anchor="middle">12 V battery</text>
+  <text class="sub"  x="135" y="658" text-anchor="middle">(≈ motor voltage)</text>
+  <text class="pinm" x="201" y="624">+</text>
+  <text class="pinm" x="201" y="670">−</text>
 
-  <!-- regulator -->
-  <rect x="80" y="730" width="120" height="56" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
-  <text class="pinm" x="140" y="752" text-anchor="middle">Regulator</text>
-  <text class="sub"  x="140" y="770" text-anchor="middle">→ 3.3 V logic</text>
+  <!-- buck converter -->
+  <rect x="75" y="726" width="150" height="56" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
+  <text class="pinm" x="150" y="750" text-anchor="middle">Buck 12 V → 5 V</text>
+  <text class="sub"  x="150" y="768" text-anchor="middle">(DC-DC, e.g. LM2596)</text>
 
-  <!-- VM rail (orange): Batt+ -> VM -->
-  <path class="pvm" d="M200,615 H360 V600"/>
-  <circle class="j" cx="200" cy="615" r="4"/>
-  <text class="pin" x="300" y="610" fill="#f08c00">VM (motor supply)</text>
+  <!-- Batt+ -> TB6612 VM (orange, full 12 V) -->
+  <path class="pvm" d="M195,622 H360 V600"/>
+  <circle class="j" cx="195" cy="622" r="4"/>
+  <text class="pin" x="250" y="616" fill="#f08c00">VM = 12 V → TB6612</text>
 
-  <!-- Batt+ -> regulator -->
-  <path class="pvm" d="M200,650 H230 V730"/>
-  <circle class="j" cx="230" cy="730" r="4"/>
-  <!-- regulator -> 3V3 node -->
-  <path class="p3v3" d="M200,758 H300 V600"/>
-  <text class="pin" x="306" y="648" fill="#e23b2e">3V3 → ESP32, QTR(VCC+LEDON),</text>
-  <text class="pin" x="306" y="664" fill="#e23b2e">TB6612(VCC+STBY), button pull-up</text>
+  <!-- Batt+ -> buck input (orange) -->
+  <path class="pvm" d="M195,652 H235 V726"/>
+  <circle class="j" cx="235" cy="726" r="4"/>
+
+  <!-- buck 5 V out -> ESP32 VIN (orange) -->
+  <path class="pvm" d="M225,754 H300 V600"/>
+  <text class="pin" x="305" y="700" fill="#f08c00">5 V → ESP32 VIN/5V</text>
+
+  <!-- 3V3 note (produced by ESP32 on-board regulator) -->
+  <text class="pin" x="305" y="726" fill="#e23b2e">ESP32 3V3-out →</text>
+  <text class="pin" x="305" y="742" fill="#e23b2e">QTR(VCC+LEDON),</text>
+  <text class="pin" x="305" y="758" fill="#e23b2e">TB6612(VCC+STBY), btn</text>
 
   <!-- GND bar -->
-  <line class="gnd" x1="80" y1="860" x2="400" y2="860"/>
-  <path class="gnd" d="M140,680 V860"/>
-  <circle class="j" cx="140" cy="680" r="4"/>
-  <circle class="j" cx="140" cy="860" r="5"/>
-  <text class="noteb" x="150" y="852">COMMON GND</text>
-  <text class="sub" x="150" y="878">ESP32 · QTR · TB6612 · battery − all tie here</text>
+  <line class="gnd" x1="75" y1="862" x2="430" y2="862"/>
+  <path class="gnd" d="M135,672 V862"/>
+  <circle class="j" cx="135" cy="672" r="4"/>
+  <circle class="j" cx="135" cy="862" r="5"/>
+  <text class="noteb" x="150" y="854">COMMON GND</text>
+  <text class="sub" x="150" y="880">ESP32 · QTR · TB6612 · battery − all tie here</text>
 
-  <text class="sub" x="70" y="606" fill="#f08c00">Keep VM &amp; logic supplies separate; add bulk 470µF + 0.1µF across VM–GND at the driver.</text>
+  <text class="sub" x="70" y="606" fill="#f08c00">Never feed 12 V to ESP32 VIN. Bulk 470µF + 0.1µF across VM–GND at the driver.</text>
 
   <!-- ===================== LEGEND / NOTES ===================== -->
   <rect class="blk" x="800" y="520" width="450" height="370" rx="8"/>

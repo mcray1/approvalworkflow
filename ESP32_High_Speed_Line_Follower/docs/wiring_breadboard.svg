@@ -76,7 +76,7 @@
   <text class="note"  x="850" y="324">• Power QTR &amp; TB6612 VCC from 3.3 V — never 5 V on ESP32 pins.</text>
   <text class="note"  x="850" y="342">• 10 kΩ from GPIO34 to + rail; button from GPIO34 node to − rail.</text>
   <text class="note"  x="850" y="360">• ⚠ GPIO12 (BIN1) is a strapping pin; if boot fails use GPIO33.</text>
-  <text class="note"  x="850" y="378">• Battery + → TB6612 VM and → regulator → + rail; all GND common.</text>
+  <text class="note"  x="850" y="378">• 12 V → TB6612 VM; 12 V→5 V buck → ESP32 VIN; ESP32 3V3 → + rail.</text>
   <text class="note"  x="850" y="396">• Verify motor direction (wheels up) &amp; steering sign in config.h.</text>
   <text class="note"  x="850" y="414">• Add a PHYSICAL kill switch on the motor supply.</text>
 
@@ -125,6 +125,7 @@
     <circle class="pad" cx="632" cy="484" r="5"/><text class="lab" x="622" y="488" text-anchor="end">G14 PWMB</text>
     <circle class="pad" cx="632" cy="512" r="5"/><text class="lab" x="622" y="516" text-anchor="end">G12 BIN1</text>
     <circle class="pad" cx="632" cy="540" r="5"/><text class="lab" x="622" y="544" text-anchor="end">G13 BIN2</text>
+    <circle class="pad" cx="632" cy="590" r="5"/><text class="lab" x="622" y="594" text-anchor="end">5V / VIN</text>
     <circle class="pad" cx="632" cy="640" r="5"/><text class="lab" x="622" y="644" text-anchor="end">G34 BTN</text>
     <circle class="pad" cx="632" cy="690" r="5"/><text class="lab" x="622" y="694" text-anchor="end">GND</text>
   </g>
@@ -174,14 +175,14 @@
 
   <!-- ============ BATTERY + REGULATOR ============ -->
   <rect x="470" y="828" width="200" height="120" rx="10" fill="#ffffff" stroke="#33415c" stroke-width="2"/>
-  <text class="btd" x="570" y="878" text-anchor="middle">Battery pack</text>
-  <text class="sub"  x="570" y="898" text-anchor="middle">confirm V / chemistry</text>
+  <text class="btd" x="570" y="878" text-anchor="middle">12 V battery</text>
+  <text class="sub"  x="570" y="898" text-anchor="middle">≈ motor voltage</text>
   <circle class="pad" cx="670" cy="850" r="5"/><text class="labd" x="662" y="848" text-anchor="end">+</text>
   <circle class="pad" cx="470" cy="850" r="5"/><text class="labd" x="478" y="848">−</text>
 
-  <rect x="700" y="846" width="120" height="70" rx="8" fill="#ffffff" stroke="#33415c" stroke-width="2"/>
-  <text class="btd" x="760" y="876" text-anchor="middle">Regulator</text>
-  <text class="sub"  x="760" y="894" text-anchor="middle">→ 3.3 V</text>
+  <rect x="700" y="846" width="150" height="70" rx="8" fill="#ffffff" stroke="#33415c" stroke-width="2"/>
+  <text class="btd" x="775" y="876" text-anchor="middle">Buck 12 V → 5 V</text>
+  <text class="sub"  x="775" y="894" text-anchor="middle">DC-DC (e.g. LM2596)</text>
 
   <!-- =================== WIRES =================== -->
   <!-- Sensors: QTR OUT (y164) -> ESP32 left pads -->
@@ -228,11 +229,12 @@
   <path class="wout" d="M1175,620 C1240,710 1120,800 1045,856"/>
   <path class="wout" d="M1175,648 C1240,730 1140,820 1045,900"/>
 
-  <!-- Battery + -> TB6612 VM (orange) and -> regulator -->
+  <!-- Battery + (12 V) -> TB6612 VM (orange), and -> buck input -->
   <path class="wvm"  d="M675,850 C820,820 1010,560 1010,476"/>
   <path class="wvm"  d="M675,850 C690,858 700,870 700,881"/>
-  <!-- Regulator -> + rail (3V3) -->
-  <path class="w3v3" d="M760,846 C760,760 500,682 300,682"/>
+  <!-- Buck 5 V out -> ESP32 5V/VIN pad (orange). ESP32 3V3-out feeds the + rail. -->
+  <path class="wvm"  d="M775,846 C765,720 690,620 637,590"/>
+  <text class="labd" x="690" y="640">5 V</text>
   <!-- Battery - -> - rail (common) -->
   <path class="wgnd" d="M465,850 C360,850 300,700 285,698"/>
 
