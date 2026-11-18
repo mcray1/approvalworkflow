@@ -12,6 +12,14 @@ pin, change it in `config.h`, not only here.**
 
 ---
 
+## Diagram
+
+A complete, color-coded schematic is in [`docs/wiring_diagram.svg`](docs/wiring_diagram.svg)
+(open in a browser to zoom). It shows every connection in the tables below plus
+the power distribution, common ground, and the GPIO34 button circuit.
+
+![ESP32 line-follower wiring diagram](docs/wiring_diagram.svg)
+
 ## 1. Pin table
 
 ### Sensors (QTR-8RC, RC/digital mode)
