@@ -31,7 +31,7 @@
 
   <!-- ============ QTR-8RC SENSOR BAR (front of robot) ============ -->
   <rect x="150" y="90" width="620" height="66" rx="8" fill="#15314f" stroke="#0c2036" stroke-width="2"/>
-  <text class="bt" x="150" y="84" dominant-baseline="auto">QTR-8RC reflectance array (robot front)</text>
+  <text class="btd" x="150" y="84" dominant-baseline="auto">QTR-8RC reflectance array (robot front)</text>
   <!-- sensor eyes -->
   <g>
     <!-- 8 emitter/receiver pairs -->
@@ -131,7 +131,7 @@
 
   <!-- ============ TB6612FNG MODULE ============ -->
   <rect x="980" y="470" width="190" height="250" rx="8" fill="#2a6e3f" stroke="#184727" stroke-width="2"/>
-  <text class="bt" x="1075" y="462" text-anchor="start">TB6612FNG driver</text>
+  <text class="btd" x="1075" y="462" text-anchor="start">TB6612FNG driver</text>
   <!-- left header (control) -->
   <g>
     <circle class="pad" cx="980" cy="500" r="5"/><text class="lab" x="990" y="504">PWMA</text>
@@ -216,10 +216,11 @@
     <path d="M637,540 C800,600 900,648 975,648"/>
   </g>
 
-  <!-- TB6612 power: VCC & STBY -> + rail ; GND -> - rail ; VM -> battery+ -->
-  <path class="w3v3" d="M1060,470 C1060,360 860,378 835,378"/>
-  <path class="w3v3" d="M1110,470 C1110,350 860,372 835,374"/>
-  <path class="wgnd" d="M1150,470 C1150,360 845,394 835,394"/>
+  <!-- TB6612 power: VCC & STBY -> bottom + rail ; GND -> bottom - rail (routed
+       low so they do not cross the legend panel). VM -> battery+ below. -->
+  <path class="w3v3" d="M1060,470 C980,432 820,540 815,682"/>
+  <path class="w3v3" d="M1110,470 C1010,432 800,560 800,682"/>
+  <path class="wgnd" d="M1150,470 C1040,432 785,580 785,698"/>
 
   <!-- TB6612 motor outputs -> motors (AO1/AO2 -> LEFT, BO1/BO2 -> RIGHT) -->
   <path class="wout" d="M1175,520 C1255,560 360,740 305,856"/>
