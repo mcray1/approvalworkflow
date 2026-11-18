@@ -190,7 +190,7 @@
   <!-- buck converter -->
   <rect x="75" y="726" width="150" height="56" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
   <text class="pinm" x="150" y="750" text-anchor="middle">Buck 12 V → 5 V</text>
-  <text class="sub"  x="150" y="768" text-anchor="middle">(DC-DC, e.g. LM2596)</text>
+  <text class="sub"  x="150" y="768" text-anchor="middle">(fixed 5 V module)</text>
 
   <!-- Batt+ -> TB6612 VM (orange, full 12 V) -->
   <path class="pvm" d="M195,622 H360 V600"/>

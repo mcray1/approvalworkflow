@@ -182,7 +182,7 @@
 
   <rect x="700" y="846" width="150" height="70" rx="8" fill="#ffffff" stroke="#33415c" stroke-width="2"/>
   <text class="btd" x="775" y="876" text-anchor="middle">Buck 12 V → 5 V</text>
-  <text class="sub"  x="775" y="894" text-anchor="middle">DC-DC (e.g. LM2596)</text>
+  <text class="sub"  x="775" y="894" text-anchor="middle">fixed 5 V module</text>
 
   <!-- =================== WIRES =================== -->
   <!-- Sensors: QTR OUT (y164) -> ESP32 left pads -->

@@ -126,9 +126,10 @@ Requirements:
 - **Common ground** across ESP32, TB6612, QTR board, buck converter and battery −.
 - **Motor supply = VM = 12 V** (direct from the pack). TB6612 `VM` is rated to
   ~15 V, so 12 V is fine; **confirm your motors are rated for 12 V.**
-- **Logic supply via a 12 V→5 V buck** (DC-DC, e.g. LM2596) into ESP32 `5V`/`VIN`.
+- **Logic supply via a fixed 12 V→5 V buck module** into ESP32 `5V`/`VIN`.
   Size the buck for the ESP32 **plus** everything on the 3.3 V rail (QTR emitters
-  can draw ~100 mA) — a 1–2 A buck is comfortable. Do **not** run the ESP32 from
+  can draw ~100 mA) — a 1–2 A module is comfortable. Confirm it reads ~5 V under
+  load before connecting the ESP32. Do **not** run the ESP32 from
   the 12 V pack directly, and do **not** use a linear regulator from 12 V (it
   would dissipate a lot of heat).
 - **3.3 V comes from the ESP32's on-board regulator** (`3V3` pin) and feeds QTR
