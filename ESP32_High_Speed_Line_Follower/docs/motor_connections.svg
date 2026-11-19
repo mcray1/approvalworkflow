@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 900" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <style>
+    .bg{fill:#f4f7fb}
+    .esp{fill:#dfe9fb;stroke:#1f6feb;stroke-width:2.5}
+    .drv{fill:#f6e0e0;stroke:#8f3131;stroke-width:2.5}
+    .bt{font-size:19px;font-weight:800;fill:#13203a}
+    .pin{font-size:12.5px;font-weight:700;fill:#13203a}
+    .lab{font-size:13px;font-weight:700}
+    .note{font-size:13px;fill:#1c2a44}
+    .s{font-size:11.5px;fill:#5a6b86}
+    .w{fill:none;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+    .dot{fill:#13203a}
+  </style>
+  <rect class="bg" x="0" y="0" width="1320" height="900"/>
+  <rect x="0" y="0" width="1320" height="56" fill="#102a47"/>
+  <rect x="0" y="52" width="1320" height="4" fill="#1f6feb"/>
+  <text x="26" y="35" fill="#fff" font-size="22" font-weight="800">Motor Connections (TB6612 → motors)</text>
+
+  <!-- ESP32 -->
+  <rect class="esp" x="60" y="150" width="210" height="470" rx="12"/>
+  <text class="bt" x="165" y="140" text-anchor="middle">ESP32</text>
+  <g>
+    <circle class="dot" cx="270" cy="210" r="4"/><text class="pin" x="262" y="214" text-anchor="end">3V3</text>
+    <circle class="dot" cx="270" cy="270" r="4"/><text class="pin" x="262" y="274" text-anchor="end">25 PWMA</text>
+    <circle class="dot" cx="270" cy="305" r="4"/><text class="pin" x="262" y="309" text-anchor="end">26 AIN1</text>
+    <circle class="dot" cx="270" cy="340" r="4"/><text class="pin" x="262" y="344" text-anchor="end">27 AIN2</text>
+    <circle class="dot" cx="270" cy="400" r="4"/><text class="pin" x="262" y="404" text-anchor="end">14 PWMB</text>
+    <circle class="dot" cx="270" cy="435" r="4"/><text class="pin" x="262" y="439" text-anchor="end">12 BIN1</text>
+    <circle class="dot" cx="270" cy="470" r="4"/><text class="pin" x="262" y="474" text-anchor="end">13 BIN2</text>
+    <circle class="dot" cx="270" cy="530" r="4"/><text class="pin" x="262" y="534" text-anchor="end">33 STBY</text>
+    <circle class="dot" cx="270" cy="590" r="4"/><text class="pin" x="262" y="594" text-anchor="end">GND</text>
+  </g>
+
+  <!-- TB6612 -->
+  <rect class="drv" x="560" y="150" width="250" height="470" rx="12"/>
+  <text class="bt" x="685" y="140" text-anchor="middle">TB6612</text>
+  <!-- inputs (left edge) -->
+  <g>
+    <circle class="dot" cx="560" cy="210" r="4"/><text class="pin" x="568" y="214">VCC</text>
+    <circle class="dot" cx="560" cy="270" r="4"/><text class="pin" x="568" y="274">PWMA</text>
+    <circle class="dot" cx="560" cy="305" r="4"/><text class="pin" x="568" y="309">AIN1</text>
+    <circle class="dot" cx="560" cy="340" r="4"/><text class="pin" x="568" y="344">AIN2</text>
+    <circle class="dot" cx="560" cy="400" r="4"/><text class="pin" x="568" y="404">PWMB</text>
+    <circle class="dot" cx="560" cy="435" r="4"/><text class="pin" x="568" y="439">BIN1</text>
+    <circle class="dot" cx="560" cy="470" r="4"/><text class="pin" x="568" y="474">BIN2</text>
+    <circle class="dot" cx="560" cy="530" r="4"/><text class="pin" x="568" y="534">STBY</text>
+    <circle class="dot" cx="560" cy="590" r="4"/><text class="pin" x="568" y="594">GND</text>
+  </g>
+  <!-- VM top -->
+  <circle class="dot" cx="640" cy="150" r="4"/>
+  <!-- outputs (right edge) -->
+  <g>
+    <circle class="dot" cx="810" cy="300" r="4"/><text class="pin" x="802" y="304" text-anchor="end">AO1</text>
+    <circle class="dot" cx="810" cy="360" r="4"/><text class="pin" x="802" y="364" text-anchor="end">AO2</text>
+    <circle class="dot" cx="810" cy="470" r="4"/><text class="pin" x="802" y="474" text-anchor="end">BO1</text>
+    <circle class="dot" cx="810" cy="530" r="4"/><text class="pin" x="802" y="534" text-anchor="end">BO2</text>
+  </g>
+
+  <!-- Motors -->
+  <circle cx="1120" cy="330" r="60" fill="#cfd6de" stroke="#8a93a0" stroke-width="2.5"/>
+  <text class="bt" x="1120" y="326" text-anchor="middle" font-size="16">LEFT</text>
+  <text class="s" x="1120" y="348" text-anchor="middle">motor</text>
+  <circle cx="1120" cy="500" r="60" fill="#cfd6de" stroke="#8a93a0" stroke-width="2.5"/>
+  <text class="bt" x="1120" y="496" text-anchor="middle" font-size="16">RIGHT</text>
+  <text class="s" x="1120" y="518" text-anchor="middle">motor</text>
+
+  <!-- ===== WIRES ===== -->
+  <!-- control signals (purple) -->
+  <g class="w" stroke="#8a2be2">
+    <path d="M270,270 H560"/><path d="M270,305 H560"/><path d="M270,340 H560"/>
+    <path d="M270,400 H560"/><path d="M270,435 H560"/><path d="M270,470 H560"/>
+    <path d="M270,530 H560"/>
+  </g>
+  <!-- 3V3 -> VCC red -->
+  <path class="w" stroke="#e23b2e" d="M270,210 H560"/>
+  <text class="lab" x="415" y="202" text-anchor="middle" fill="#e23b2e">3.3 V</text>
+  <!-- GND -->
+  <path class="w" stroke="#222831" d="M270,590 H560"/>
+  <!-- VM orange -->
+  <path class="w" stroke="#f08c00" stroke-width="5" d="M640,150 V95 H420"/>
+  <text class="lab" x="430" y="90" fill="#c06a00">VM ← 11.1–12.6 V (battery, through kill switch)</text>
+  <!-- outputs green -->
+  <path class="w" stroke="#2e8b57" stroke-width="5" d="M810,300 C920,300 980,315 1062,320"/>
+  <path class="w" stroke="#2e8b57" stroke-width="5" d="M810,360 C920,360 980,345 1062,342"/>
+  <path class="w" stroke="#2e8b57" stroke-width="5" d="M810,470 C920,470 980,485 1062,490"/>
+  <path class="w" stroke="#2e8b57" stroke-width="5" d="M810,530 C920,530 980,515 1062,512"/>
+  <text class="lab" x="900" y="285" fill="#2e8b57">AO1/AO2 → LEFT</text>
+  <text class="lab" x="900" y="560" fill="#2e8b57">BO1/BO2 → RIGHT</text>
+
+  <!-- group labels -->
+  <text class="s" x="415" y="360" text-anchor="middle" fill="#8a2be2">left motor control</text>
+  <text class="s" x="415" y="490" text-anchor="middle" fill="#8a2be2">right motor control</text>
+
+  <!-- ===== voltage expectations ===== -->
+  <rect x="60" y="660" width="760" height="210" rx="10" fill="#ffffff" stroke="#b9c3d2" stroke-width="1.5"/>
+  <text class="bt" x="78" y="692" font-size="16">What to measure (during the 't' motor test)</text>
+  <text class="note" x="78" y="720">• <tspan font-weight="800">VM → GND</tspan> should be <tspan font-weight="800">~11–12.6 V</tspan>. If low → kill switch / polarity / VM wire / weak source.</text>
+  <text class="note" x="78" y="746">• <tspan font-weight="800">STBY → GND</tspan> should be <tspan font-weight="800">~3.3 V while driving</tspan>. If ~0 → driver is OFF (outputs float).</text>
+  <text class="note" x="78" y="772">• <tspan font-weight="800">VCC → GND</tspan> should be <tspan font-weight="800">~3.3 V</tspan> (logic supply).</text>
+  <text class="note" x="78" y="798">• <tspan font-weight="800">AO1↔AO2 (or BO1↔BO2)</tspan> while driving ≈ <tspan font-weight="800">VM × duty</tspan> — several volts, not 1.4 V.</text>
+  <text class="note" x="78" y="824">• <tspan font-weight="800">Each motor across its 2 leads</tspan> ≈ a few ohms (not open/broken).</text>
+  <text class="s" x="78" y="852">A multimeter reads the PWM average, so a *driven* output still shows several volts. 1.4 V means it isn't really driving.</text>
+
+  <!-- 1.4V callout -->
+  <rect x="840" y="660" width="420" height="210" rx="10" fill="#fff6e6" stroke="#c7891f" stroke-width="2"/>
+  <text x="858" y="692" font-size="16" font-weight="800" fill="#8a5a00">Your 1.4 V means:</text>
+  <text class="note" x="858" y="722" fill="#5a3d00">The output is <tspan font-weight="800">floating</tspan>, not driving. Almost</text>
+  <text class="note" x="858" y="744" fill="#5a3d00">always one of:</text>
+  <text class="note" x="858" y="772" fill="#5a3d00">1. <tspan font-weight="800">STBY not HIGH</tspan> → driver in standby</text>
+  <text class="note" x="858" y="794" fill="#5a3d00">    (fix the STBY wiring: direct to GPIO33,</text>
+  <text class="note" x="858" y="814" fill="#5a3d00">    10 kΩ pull-down to GND).</text>
+  <text class="note" x="858" y="840" fill="#5a3d00">2. <tspan font-weight="800">VM missing / low</tspan> (not on the battery).</text>
+  <text class="note" x="858" y="862" fill="#5a3d00">3. VCC (logic) not at 3.3 V.</text>
+</svg>
