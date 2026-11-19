@@ -136,7 +136,8 @@ telemetry in the hot path.
 
 ## 7. Documentation index
 
-- [`WIRING.md`](WIRING.md) — pin table, electrical precautions
+- [`WIRING.md`](WIRING.md) — pin table, electrical precautions, wiring & robot diagrams
+- [`docs/build_spec.svg`](docs/build_spec.svg) — one-page build & assembly reference sheet
 - [`CALIBRATION.md`](CALIBRATION.md) — calibration procedure & verification
 - [`PID_TUNING.md`](PID_TUNING.md) — progressive tuning guide
 - [`TEST_PLAN.md`](TEST_PLAN.md) — power-on → full-speed validation

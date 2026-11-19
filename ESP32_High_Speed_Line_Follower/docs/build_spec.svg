@@ -1,0 +1,344 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1072" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <style>
+    .bg    { fill:#f3f6fb; }
+    .panel { fill:#ffffff; stroke:#b9c3d2; stroke-width:1.5; }
+    .hdr   { fill:#143a63; }
+    .htxt  { fill:#ffffff; font-size:15px; font-weight:700; }
+    .row   { fill:#15223c; font-size:12.5px; }
+    .rowb  { fill:#15223c; font-size:12.5px; font-weight:700; }
+    .small { fill:#5a6b86; font-size:11px; }
+    .tiny  { fill:#5a6b86; font-size:10px; }
+    .dimt  { fill:#7a6530; font-size:11px; }
+    .dl    { stroke:#c79a35; stroke-width:1.2; fill:none; }
+    .lead  { stroke:#8a93a0; stroke-width:1; fill:none; }
+    .zebra { fill:#eef3f9; }
+    .chassis{ fill:#e9eef6; stroke:#5a6b86; stroke-width:2; }
+    .tire  { fill:#2b3442; stroke:#141a22; stroke-width:1.6; }
+    .hub   { fill:#c7ccd4; stroke:#8a93a0; stroke-width:1.2; }
+    .pcb   { fill:#15314f; stroke:#0c2036; stroke-width:1.5; }
+    .drv   { fill:#8a2f2f; stroke:#561b1b; stroke-width:1.5; }
+    .mot   { fill:#b9892f; stroke:#6e5115; stroke-width:1.5; }
+    .batt  { fill:#5a626b; stroke:#30353c; stroke-width:1.5; }
+    .buck  { fill:#7a4ea0; stroke:#4a2d64; stroke-width:1.5; }
+    .wtxt  { fill:#ffffff; font-size:10px; font-weight:700; }
+    .acc   { fill:#1f6feb; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1072"/>
+
+  <!-- ===================== HEADER ===================== -->
+  <rect x="0" y="0" width="1600" height="74" fill="#102a47"/>
+  <rect x="0" y="70" width="1600" height="4" fill="#1f6feb"/>
+  <text x="24" y="34" fill="#ffffff" font-size="26" font-weight="700">ESP32 High-Speed Line-Following Robot</text>
+  <text x="24" y="58" fill="#adc2dd" font-size="14">Build &amp; Assembly Reference — dimensions are PROPOSED (verify with actual parts) · pins per config.h · battery to be confirmed</text>
+  <text x="1576" y="34" fill="#ffffff" font-size="14" font-weight="700" text-anchor="end">Competition build</text>
+  <text x="1576" y="56" fill="#adc2dd" font-size="12" text-anchor="end">QTR-8RC · TB6612FNG · 200 Hz PID</text>
+
+  <!-- ===================================================== -->
+  <!--  ROW A: Features | Build dims | Exploded | Pin map     -->
+  <!-- ===================================================== -->
+
+  <!-- Features -->
+  <rect class="panel" x="18" y="88" width="330" height="412" rx="8"/>
+  <rect class="hdr"   x="18" y="88" width="330" height="30" rx="8"/>
+  <text class="htxt"  x="34" y="109">Key Features</text>
+  <g>
+    <!-- six features -->
+    <g transform="translate(34,138)">
+      <circle cx="12" cy="8" r="13" fill="#e6effb" stroke="#1f6feb"/><text x="12" y="13" text-anchor="middle" font-size="13">⚡</text>
+      <text class="rowb" x="40" y="4">High-Speed Racing</text>
+      <text class="small" x="40" y="20">Base PWM 100 → 200 of 255, adaptive</text>
+    </g>
+    <g transform="translate(34,196)">
+      <circle cx="12" cy="8" r="13" fill="#e6effb" stroke="#1f6feb"/><text x="12" y="13" text-anchor="middle" font-size="12">◉◉</text>
+      <text class="rowb" x="40" y="4">8-Sensor Array</text>
+      <text class="small" x="40" y="20">Pololu QTR-8RC, calibrated line pos.</text>
+    </g>
+    <g transform="translate(34,254)">
+      <circle cx="12" cy="8" r="13" fill="#e6effb" stroke="#1f6feb"/><text x="12" y="13" text-anchor="middle" font-size="13">⚙</text>
+      <text class="rowb" x="40" y="4">PID Steering @ 200 Hz</text>
+      <text class="small" x="40" y="20">5 ms loop, filtered-D, anti-windup</text>
+    </g>
+    <g transform="translate(34,312)">
+      <circle cx="12" cy="8" r="13" fill="#e6effb" stroke="#1f6feb"/><text x="12" y="13" text-anchor="middle" font-size="13">↗</text>
+      <text class="rowb" x="40" y="4">Adaptive Speed</text>
+      <text class="small" x="40" y="20">Slows for curves, accelerates straights</text>
+    </g>
+    <g transform="translate(34,370)">
+      <circle cx="12" cy="8" r="13" fill="#e6effb" stroke="#1f6feb"/><text x="12" y="13" text-anchor="middle" font-size="13">⟳</text>
+      <text class="rowb" x="40" y="4">Line-Loss Recovery</text>
+      <text class="small" x="40" y="20">Bounded search, 1.2 s timeout → stop</text>
+    </g>
+    <g transform="translate(34,428)">
+      <circle cx="12" cy="8" r="13" fill="#e6effb" stroke="#1f6feb"/><text x="12" y="13" text-anchor="middle" font-size="12">▣</text>
+      <text class="rowb" x="40" y="4">ESP32-DevKitC V4</text>
+      <text class="small" x="40" y="20">240 MHz, LEDC PWM, standalone</text>
+    </g>
+  </g>
+
+  <!-- Proposed build dimensions -->
+  <rect class="panel" x="360" y="88" width="330" height="412" rx="8"/>
+  <rect class="hdr"   x="360" y="88" width="330" height="30" rx="8"/>
+  <text class="htxt"  x="376" y="109">Proposed Dimensions</text>
+  <text class="tiny"  x="676" y="108" text-anchor="end" fill="#cfe0f2">verify w/ parts</text>
+  <g>
+    <!-- rows -->
+    <g>
+      <rect class="zebra" x="360" y="128" width="330" height="30"/>
+      <rect class="zebra" x="360" y="188" width="330" height="30"/>
+      <rect class="zebra" x="360" y="248" width="330" height="30"/>
+      <rect class="zebra" x="360" y="308" width="330" height="30"/>
+      <rect class="zebra" x="360" y="368" width="330" height="30"/>
+      <rect class="zebra" x="360" y="428" width="330" height="30"/>
+    </g>
+    <g font-size="12.5">
+      <text class="rowb" x="376" y="147">Length (L)</text>          <text class="row" x="676" y="147" text-anchor="end">150 mm</text>
+      <text class="rowb" x="376" y="177">Width (W, incl. wheels)</text><text class="row" x="676" y="177" text-anchor="end">120 mm</text>
+      <text class="rowb" x="376" y="207">Height (with battery)</text> <text class="row" x="676" y="207" text-anchor="end">75 mm</text>
+      <text class="rowb" x="376" y="237">Chassis plate</text>         <text class="row" x="676" y="237" text-anchor="end">100 × 135 × 2.5 mm</text>
+      <text class="rowb" x="376" y="267">Wheel</text>                 <text class="row" x="676" y="267" text-anchor="end">Ø45 × 18 mm</text>
+      <text class="rowb" x="376" y="297">Ground clearance</text>     <text class="row" x="676" y="297" text-anchor="end">3 – 5 mm</text>
+      <text class="rowb" x="376" y="327">Sensor height (track)</text><text class="row" x="676" y="327" text-anchor="end">2 – 4 mm</text>
+      <text class="rowb" x="376" y="357">Est. weight</text>          <text class="row" x="676" y="357" text-anchor="end">≈ 180 – 240 g</text>
+      <text class="rowb" x="376" y="387">Chassis material</text>     <text class="row" x="676" y="387" text-anchor="end">Carbon / FR4</text>
+      <text class="rowb" x="376" y="417">Battery</text>              <text class="row" x="676" y="417" text-anchor="end" fill="#b23b3b">CONFIRM</text>
+      <text class="rowb" x="376" y="447">Wheelbase / track</text>    <text class="row" x="676" y="447" text-anchor="end">verify</text>
+    </g>
+    <line x1="360" y1="460" x2="690" y2="460" stroke="#d6deea"/>
+    <text class="small" x="376" y="480">Battery: 2S LiPo 7.4 V or 12 V — sets VM &amp; buck input.</text>
+  </g>
+
+  <!-- Exploded / assembly order -->
+  <rect class="panel" x="702" y="88" width="560" height="412" rx="8"/>
+  <rect class="hdr"   x="702" y="88" width="560" height="30" rx="8"/>
+  <text class="htxt"  x="718" y="109">Exploded View — Assembly Order (top → bottom)</text>
+
+  <!-- assembly axis rods -->
+  <line x1="800" y1="140" x2="800" y2="470" class="lead" stroke-dasharray="5 5"/>
+  <line x1="940" y1="140" x2="940" y2="470" class="lead" stroke-dasharray="5 5"/>
+
+  <!-- helper slabs (parallelograms) + modules, top to bottom -->
+  <!-- 1 Battery -->
+  <polygon class="batt" points="760,150 980,150 940,172 720,172"/>
+  <rect x="720" y="172" width="220" height="9" fill="#444b54"/>
+  <path class="lead" d="M940,160 H1020"/><text class="row" x="1026" y="156">Battery pack — velcro, modular</text><text class="small" x="1026" y="172">2S LiPo 7.4 V or 12 V (confirm)</text>
+
+  <!-- 2 ESP32 -->
+  <polygon class="pcb" points="772,196 968,196 934,214 738,214"/>
+  <path class="lead" d="M934,205 H1020"/><text class="row" x="1026" y="201">ESP32-DevKitC V4</text><text class="small" x="1026" y="217">main controller (54.4 × 27.9)</text>
+
+  <!-- 3 TB6612 -->
+  <polygon class="drv" points="804,234 912,234 884,250 776,250"/>
+  <path class="lead" d="M884,242 H1020"/><text class="row" x="1026" y="238">TB6612FNG dual driver</text>
+
+  <!-- 4 Upper plate -->
+  <polygon class="chassis" points="756,272 984,272 942,296 714,296"/>
+  <rect x="714" y="296" width="228" height="8" fill="#cdd5e1"/>
+  <path class="lead" d="M942,284 H1020"/><text class="row" x="1026" y="280">Upper chassis plate</text><text class="small" x="1026" y="296">100 × 135 × 2.5 mm</text>
+
+  <!-- 5 Motors -->
+  <polygon class="mot" points="742,320 812,320 788,336 718,336"/>
+  <polygon class="mot" points="892,320 962,320 938,336 868,336"/>
+  <path class="lead" d="M962,328 H1020"/><text class="row" x="1026" y="324">DC gear motor × 2</text><text class="small" x="1026" y="340">6 – 12 V (measure actual)</text>
+
+  <!-- 6 Lower plate -->
+  <polygon class="chassis" points="756,356 984,356 942,380 714,380"/>
+  <rect x="714" y="380" width="228" height="8" fill="#cdd5e1"/>
+  <path class="lead" d="M942,368 H1020"/><text class="row" x="1026" y="364">Lower chassis plate</text>
+
+  <!-- 7 QTR bar (front) -->
+  <polygon class="pcb" points="748,414 992,414 950,434 706,434"/>
+  <g fill="#e9eef5"><circle cx="760" cy="424" r="4"/><circle cx="792" cy="424" r="4"/><circle cx="824" cy="424" r="4"/><circle cx="856" cy="424" r="4"/><circle cx="888" cy="424" r="4"/><circle cx="920" cy="424" r="4"/><circle cx="952" cy="424" r="4"/><circle cx="984" cy="424" r="4"/></g>
+  <path class="lead" d="M950,428 H1020"/><text class="row" x="1026" y="424">Pololu QTR-8RC (front)</text><text class="small" x="1026" y="440">74.9 × 12.7 mm · 8 reflectance</text>
+
+  <text class="tiny" x="718" y="474">Use NYLON standoffs — carbon-fiber plates are electrically conductive.</text>
+  <text class="tiny" x="718" y="490">Keep a front caster/skid; CG over/ahead of the drive axle.</text>
+
+  <!-- Pin map -->
+  <rect class="panel" x="1274" y="88" width="308" height="412" rx="8"/>
+  <rect class="hdr"   x="1274" y="88" width="308" height="30" rx="8"/>
+  <text class="htxt"  x="1290" y="109">Pin Map (config.h)</text>
+  <g font-size="12">
+    <rect class="zebra" x="1274" y="128" width="308" height="22"/>
+    <text class="rowb" x="1290" y="143">Sensors S1–S8 (QTR OUT)</text>
+    <text class="row"  x="1290" y="170">S1 16  S2 17  S3 18  S4 19</text>
+    <text class="row"  x="1290" y="190">S5 21  S6 22  S7 23  S8 4</text>
+
+    <rect class="zebra" x="1274" y="206" width="308" height="22"/>
+    <text class="rowb" x="1290" y="221">Left motor (A)</text>
+    <text class="row"  x="1290" y="246">PWMA 25 · AIN1 26 · AIN2 27</text>
+
+    <rect class="zebra" x="1274" y="262" width="308" height="22"/>
+    <text class="rowb" x="1290" y="277">Right motor (B)</text>
+    <text class="row"  x="1290" y="302">PWMB 14 · BIN1 12 ⚠ · BIN2 13</text>
+
+    <rect class="zebra" x="1274" y="318" width="308" height="22"/>
+    <text class="rowb" x="1290" y="333">Control / misc</text>
+    <text class="row"  x="1290" y="358">Button 34 (+10 kΩ pull-up)</text>
+    <text class="row"  x="1290" y="378">QTR LEDON → tie 3V3 (emitters on)</text>
+    <text class="row"  x="1290" y="398">TB6612 STBY → tie 3V3</text>
+
+    <line x1="1274" y1="414" x2="1582" y2="414" stroke="#d6deea"/>
+    <text class="small" x="1290" y="433">⚠ GPIO12 is a strapping pin — if boot</text>
+    <text class="small" x="1290" y="449">fails, move BIN1 to GPIO33.</text>
+    <text class="small" x="1290" y="473">Logic 3.3 V from ESP32; VM = battery.</text>
+  </g>
+
+  <!-- ===================================================== -->
+  <!--  ROW B: Key specs | Orthographic views                -->
+  <!-- ===================================================== -->
+
+  <!-- Key specifications -->
+  <rect class="panel" x="18" y="512" width="430" height="326" rx="8"/>
+  <rect class="hdr"   x="18" y="512" width="430" height="30" rx="8"/>
+  <text class="htxt"  x="34" y="533">Key Specifications</text>
+  <g font-size="12.5">
+    <rect class="zebra" x="18" y="552" width="430" height="24"/>
+    <rect class="zebra" x="18" y="600" width="430" height="24"/>
+    <rect class="zebra" x="18" y="648" width="430" height="24"/>
+    <rect class="zebra" x="18" y="696" width="430" height="24"/>
+    <rect class="zebra" x="18" y="744" width="430" height="24"/>
+    <rect class="zebra" x="18" y="792" width="430" height="24"/>
+    <text class="rowb" x="34" y="569">Microcontroller</text> <text class="row" x="432" y="569" text-anchor="end">ESP32-DevKitC V4</text>
+    <text class="rowb" x="34" y="593">Line sensor</text>     <text class="row" x="432" y="593" text-anchor="end">Pololu QTR-8RC (8-ch)</text>
+    <text class="rowb" x="34" y="617">Motor driver</text>    <text class="row" x="432" y="617" text-anchor="end">TB6612FNG dual H-bridge</text>
+    <text class="rowb" x="34" y="641">Motors</text>          <text class="row" x="432" y="641" text-anchor="end">2× DC gear 6–12 V (verify)</text>
+    <text class="rowb" x="34" y="665">Battery</text>         <text class="row" x="432" y="665" text-anchor="end" fill="#b23b3b">2S 7.4 V or 12 V — confirm</text>
+    <text class="rowb" x="34" y="689">Control interval</text><text class="row" x="432" y="689" text-anchor="end">5 ms (200 Hz)</text>
+    <text class="rowb" x="34" y="713">Start / Max PWM</text> <text class="row" x="432" y="713" text-anchor="end">100 / 200 (of 255)</text>
+    <text class="rowb" x="34" y="737">Recovery timeout</text><text class="row" x="432" y="737" text-anchor="end">1.2 s → safe stop</text>
+    <text class="rowb" x="34" y="761">Chassis</text>         <text class="row" x="432" y="761" text-anchor="end">Carbon fiber / FR4, 2.5 mm</text>
+    <text class="rowb" x="34" y="785">Logic supply</text>    <text class="row" x="432" y="785" text-anchor="end">buck → 5 V → ESP32 VIN</text>
+    <text class="rowb" x="34" y="809">Est. weight</text>     <text class="row" x="432" y="809" text-anchor="end">≈ 180–240 g</text>
+  </g>
+
+  <!-- Orthographic views -->
+  <rect class="panel" x="460" y="512" width="1122" height="326" rx="8"/>
+  <rect class="hdr"   x="460" y="512" width="1122" height="30" rx="8"/>
+  <text class="htxt"  x="476" y="533">Orthographic Views (mm, proposed)</text>
+
+  <!-- TOP VIEW -->
+  <g>
+    <rect class="chassis" x="540" y="580" width="150" height="190" rx="14"/>
+    <rect class="pcb" x="528" y="566" width="174" height="16" rx="3"/>  <!-- sensor bar -->
+    <rect class="tire" x="520" y="636" width="20" height="70" rx="5"/>
+    <rect class="tire" x="690" y="636" width="20" height="70" rx="5"/>
+    <rect class="pcb" x="585" y="612" width="60" height="44" rx="4"/><text class="wtxt" x="615" y="638" text-anchor="middle">ESP32</text>
+    <rect class="batt" x="575" y="690" width="80" height="44" rx="4"/><text class="wtxt" x="615" y="716" text-anchor="middle">batt</text>
+    <circle cx="615" cy="752" r="10" class="hub"/>
+    <!-- dims -->
+    <line class="dl" x1="520" y1="556" x2="710" y2="556"/><path class="dl" d="M520,551v10 M710,551v10"/>
+    <text class="dimt" x="615" y="549" text-anchor="middle">120 (incl. wheels)</text>
+    <line class="dl" x1="724" y1="566" x2="724" y2="770"/><path class="dl" d="M719,566h10 M719,770h10"/>
+    <text class="dimt" x="732" y="668" transform="rotate(90,732,668)" text-anchor="middle">150</text>
+    <text class="rowb" x="615" y="792" text-anchor="middle">TOP</text>
+  </g>
+
+  <!-- FRONT VIEW -->
+  <g>
+    <rect class="chassis" x="880" y="606" width="180" height="96" rx="8"/>
+    <rect class="batt" x="930" y="580" width="80" height="30" rx="4"/>
+    <rect class="pcb" x="950" y="588" width="40" height="16" rx="2"/>
+    <rect class="tire" x="852" y="620" width="28" height="92" rx="7"/>
+    <rect class="tire" x="1060" y="620" width="28" height="92" rx="7"/>
+    <rect class="pcb" x="900" y="724" width="140" height="14" rx="3"/>  <!-- sensor bar low -->
+    <g fill="#e9eef5"><circle cx="915" cy="731" r="3"/><circle cx="935" cy="731" r="3"/><circle cx="955" cy="731" r="3"/><circle cx="975" cy="731" r="3"/><circle cx="995" cy="731" r="3"/><circle cx="1015" cy="731" r="3"/><circle cx="1035" cy="731" r="3"/></g>
+    <line x1="900" y1="752" x2="1040" y2="752" stroke="#5a6b86" stroke-width="2"/>
+    <!-- dims -->
+    <line class="dl" x1="836" y1="580" x2="836" y2="738"/><path class="dl" d="M831,580h10 M831,738h10"/>
+    <text class="dimt" x="828" y="660" transform="rotate(90,828,660)" text-anchor="middle">75 (with batt)</text>
+    <line class="dl" x1="1100" y1="738" x2="1100" y2="752"/><path class="dl" d="M1095,738h10 M1095,752h10"/>
+    <text class="dimt" x="1108" y="749">sensor 2–4</text>
+    <text class="rowb" x="960" y="792" text-anchor="middle">FRONT</text>
+  </g>
+
+  <!-- SIDE VIEW -->
+  <g>
+    <rect class="chassis" x="1200" y="636" width="300" height="20" rx="5"/>
+    <rect class="batt" x="1320" y="600" width="90" height="36" rx="4"/>
+    <rect class="pcb" x="1270" y="612" width="44" height="24" rx="3"/>
+    <rect class="mot" x="1410" y="606" width="60" height="30" rx="5"/>
+    <circle class="tire" cx="1440" cy="700" r="42"/><circle class="hub" cx="1440" cy="700" r="13"/>
+    <circle cx="1230" cy="724" r="14" class="hub"/>  <!-- caster -->
+    <path d="M1200,648 L1180,648 L1180,722" stroke="#2b3442" stroke-width="3" fill="none"/>
+    <rect class="pcb" x="1156" y="720" width="48" height="11" rx="2"/>
+    <line x1="1150" y1="742" x2="1500" y2="742" stroke="#5a6b86" stroke-width="2"/>
+    <!-- dims -->
+    <line class="dl" x1="1200" y1="586" x2="1500" y2="586"/><path class="dl" d="M1200,581v10 M1500,581v10"/>
+    <text class="dimt" x="1350" y="579" text-anchor="middle">150 (length)</text>
+    <line class="dl" x1="1486" y1="658" x2="1486" y2="742"/><path class="dl" d="M1481,658h10 M1481,742h10"/>
+    <text class="dimt" x="1494" y="704">Ø45</text>
+    <line class="dl" x1="1250" y1="730" x2="1250" y2="742"/><path class="dl" d="M1245,730h10 M1245,742h10"/>
+    <text class="dimt" x="1258" y="739">clr 3–5</text>
+    <text class="rowb" x="1350" y="792" text-anchor="middle">SIDE</text>
+  </g>
+
+  <!-- ===================================================== -->
+  <!--  ROW C: Component dims | Chassis plates | Legend       -->
+  <!-- ===================================================== -->
+
+  <!-- Component dimensions -->
+  <rect class="panel" x="18" y="850" width="680" height="200" rx="8"/>
+  <rect class="hdr"   x="18" y="850" width="680" height="30" rx="8"/>
+  <text class="htxt"  x="34" y="871">Component Dimensions (verified reference)</text>
+
+  <!-- ESP32 -->
+  <rect class="pcb" x="60" y="906" width="150" height="78" rx="4"/>
+  <rect x="96" y="918" width="78" height="40" rx="2" fill="#2b4a6b"/>
+  <line class="dl" x1="60" y1="898" x2="210" y2="898"/><path class="dl" d="M60,893v10 M210,893v10"/>
+  <text class="dimt" x="135" y="890" text-anchor="middle">54.4 mm</text>
+  <line class="dl" x1="224" y1="906" x2="224" y2="984"/><path class="dl" d="M219,906h10 M219,984h10"/>
+  <text class="dimt" x="232" y="948">27.9</text>
+  <text class="rowb" x="60" y="1006">ESP32-DevKitC V4</text>
+  <text class="small" x="60" y="1024">54.4 × 27.9 mm · PCB ≈ 1.6 mm</text>
+
+  <!-- QTR -->
+  <rect class="pcb" x="330" y="930" width="300" height="34" rx="3"/>
+  <g fill="#e9eef5"><circle cx="356" cy="947" r="5"/><circle cx="392" cy="947" r="5"/><circle cx="428" cy="947" r="5"/><circle cx="464" cy="947" r="5"/><circle cx="500" cy="947" r="5"/><circle cx="536" cy="947" r="5"/><circle cx="572" cy="947" r="5"/><circle cx="608" cy="947" r="5"/></g>
+  <line class="dl" x1="330" y1="922" x2="630" y2="922"/><path class="dl" d="M330,917v10 M630,917v10"/>
+  <text class="dimt" x="480" y="914" text-anchor="middle">74.9 mm (2.95 in)</text>
+  <line class="dl" x1="644" y1="930" x2="644" y2="964"/><path class="dl" d="M639,930h10 M639,964h10"/>
+  <text class="dimt" x="652" y="950">12.7</text>
+  <text class="rowb" x="330" y="1006">Pololu QTR-8RC</text>
+  <text class="small" x="330" y="1024">74.9 × 12.7 mm · ≈3.0–3.5 mm (no header)</text>
+
+  <!-- Chassis plates -->
+  <rect class="panel" x="710" y="850" width="410" height="200" rx="8"/>
+  <rect class="hdr"   x="710" y="850" width="410" height="30" rx="8"/>
+  <text class="htxt"  x="726" y="871">Proposed Chassis Plates</text>
+  <!-- dogbone upper -->
+  <path class="chassis" d="M760,912 h70 v-14 h40 v14 h70 v70 h-70 v14 h-40 v-14 h-70 z"/>
+  <g fill="#5a6b86"><circle cx="772" cy="922" r="3"/><circle cx="958" cy="922" r="3"/><circle cx="772" cy="972" r="3"/><circle cx="958" cy="972" r="3"/><circle cx="865" cy="900" r="3"/><circle cx="865" cy="994" r="3"/></g>
+  <text class="rowb" x="865" y="1020" text-anchor="middle">Upper</text>
+  <text class="small" x="865" y="1037" text-anchor="middle">100×135×2.5 (holes verify)</text>
+  <!-- dogbone lower -->
+  <path class="chassis" d="M980,912 h70 v-14 h40 v14 h0 v70 h0 v14 h-40 v-14 h-70 z"/>
+  <g fill="#5a6b86"><circle cx="992" cy="922" r="3"/><circle cx="1085" cy="922" r="3"/><circle cx="992" cy="972" r="3"/><circle cx="1085" cy="972" r="3"/></g>
+  <text class="rowb" x="1050" y="1020" text-anchor="middle">Lower</text>
+  <text class="small" x="1050" y="1037" text-anchor="middle">100×135×2.5 (holes verify)</text>
+
+  <!-- Legend & scale -->
+  <rect class="panel" x="1132" y="850" width="450" height="200" rx="8"/>
+  <rect class="hdr"   x="1132" y="850" width="450" height="30" rx="8"/>
+  <text class="htxt"  x="1148" y="871">Legend, Scale &amp; Notes</text>
+  <g>
+    <circle cx="1160" cy="902" r="8" fill="#2e8b57"/><text x="1160" y="906" text-anchor="middle" fill="#fff" font-size="10">✓</text>
+    <text class="small" x="1176" y="906">Verified (from datasheet)</text>
+    <circle cx="1340" cy="902" r="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/>
+    <text class="small" x="1356" y="906">Proposed (verify w/ parts)</text>
+  </g>
+  <!-- scale bar -->
+  <g transform="translate(1148,922)">
+    <rect x="0" y="0" width="200" height="12" fill="#fff" stroke="#15223c"/>
+    <rect x="0" y="0" width="40" height="12" fill="#15223c"/>
+    <rect x="80" y="0" width="40" height="12" fill="#15223c"/>
+    <rect x="160" y="0" width="40" height="12" fill="#15223c"/>
+    <text class="tiny" x="0" y="26">0</text><text class="tiny" x="36" y="26">10</text><text class="tiny" x="76" y="26">20</text><text class="tiny" x="116" y="26">30</text><text class="tiny" x="156" y="26">40</text><text class="tiny" x="196" y="26">50 mm</text>
+  </g>
+  <text class="small" x="1148" y="982">• All “proposed” sizes are design reference — verify actual parts.</text>
+  <text class="small" x="1148" y="1000">• Confirm battery (2S 7.4 V or 12 V) → sets VM &amp; buck input.</text>
+  <text class="small" x="1148" y="1018">• Nylon standoffs on carbon fiber; front caster + low, central CG.</text>
+  <text class="small" x="1148" y="1036">• Pins = config.h · wiring = WIRING.md &amp; docs/wiring_*.svg.</text>
+
+  <text class="tiny" x="24" y="1066">ESP32 High-Speed Line-Following Robot — build reference. Proposed dimensions modeled on the shared spec; adjust to your chassis, motors and track rules. Firmware unchanged by mechanicals.</text>
+</svg>
