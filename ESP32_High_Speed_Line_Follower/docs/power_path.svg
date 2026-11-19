@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 920" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="a" markerWidth="11" markerHeight="11" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#45506a"/></marker>
+  </defs>
+  <style>
+    .bg{fill:#f4f7fb}
+    .blk{stroke-width:2.2}
+    .bt{font-size:18px;font-weight:800;fill:#13203a}
+    .bs{font-size:12px;fill:#45506a}
+    .pin{font-size:12px;font-weight:700;fill:#13203a}
+    .w{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+    .wt{fill:none;stroke-width:4;stroke-linecap:round;stroke-dasharray:3 6}
+    .v{font-size:13px;font-weight:800;fill:#fff}
+    .h2{font-size:15px;font-weight:800;fill:#13203a}
+    .t{font-size:12.5px;fill:#1c2a44}
+    .s{font-size:11px;fill:#5a6b86}
+    .warn{font-size:12px;font-weight:700;fill:#a2371b}
+  </style>
+  <rect class="bg" x="0" y="0" width="1560" height="920"/>
+  <rect x="0" y="0" width="1560" height="60" fill="#102a47"/>
+  <rect x="0" y="56" width="1560" height="4" fill="#1f6feb"/>
+  <text x="26" y="30" fill="#fff" font-size="23" font-weight="800">Power Path — Battery → ESP32 (deep dive)</text>
+  <text x="26" y="49" fill="#adc2dd" font-size="13">Three voltage stages: 🟠 11.1 V pack → 🟦 5 V (buck) → 🔴 3.3 V (ESP32's own regulator). One common ground.</text>
+
+  <!-- ===== WIRES (under blocks) ===== -->
+  <!-- + rail 11.1V: battery+ -> kill -> node -->
+  <path class="w" stroke="#f08c00" d="M210,250 H250"/>
+  <path class="w" stroke="#f08c00" d="M300,250 H360"/>
+  <!-- node -> VM stub (up) -->
+  <path class="w" stroke="#f08c00" d="M360,250 V150 H470" marker-end="url(#a)"/>
+  <!-- node -> buck IN+ -->
+  <path class="w" stroke="#f08c00" d="M360,250 V280 H470"/>
+  <circle cx="360" cy="250" r="6" fill="#13203a"/>
+  <!-- buck OUT+ -> ESP32 5V -->
+  <path class="w" stroke="#0a8aa0" d="M650,280 H700 V250 H770"/>
+  <!-- ESP32 internal 5V -> LDO -> 3V3 -->
+  <path class="w" stroke="#0a8aa0" stroke-width="4" d="M860,250 H900"/>
+  <path class="w" stroke="#e23b2e" stroke-width="4" d="M1020,250 H1070"/>
+  <!-- 3V3 out stub -->
+  <path class="w" stroke="#e23b2e" d="M1120,250 H1200" marker-end="url(#a)"/>
+  <!-- USB (bench) -->
+  <path class="wt" stroke="#0a8aa0" d="M945,120 V210"/>
+  <!-- GND bus -->
+  <path class="w" stroke="#222831" stroke-width="7" d="M150,430 H1200"/>
+  <path class="w" stroke="#222831" stroke-width="4" d="M210,350 V430 M520,320 V430 M770,350 V430 M330,300 V430"/>
+
+  <!-- ===== BLOCKS ===== -->
+  <!-- Battery -->
+  <rect class="blk" x="60" y="190" width="150" height="150" rx="12" fill="#e7eaef" stroke="#5a626b"/>
+  <text class="bt" x="135" y="250" text-anchor="middle">3S LiPo</text>
+  <text class="bs" x="135" y="272" text-anchor="middle">11.1 V nominal</text>
+  <text class="bs" x="135" y="290" text-anchor="middle">12.6 V full · 1400 mAh</text>
+  <text class="pin" x="200" y="244" text-anchor="end" fill="#c06a00">+</text>
+  <text class="pin" x="200" y="360" text-anchor="end">−</text>
+
+  <!-- Kill switch -->
+  <rect x="250" y="236" width="50" height="28" rx="5" fill="#b23b3b" stroke="#6e1f1f"/>
+  <text x="275" y="255" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">KILL</text>
+
+  <!-- Decoupling cap -->
+  <line x1="318" y1="300" x2="342" y2="300" stroke="#13203a" stroke-width="2"/>
+  <line x1="322" y1="310" x2="338" y2="310" stroke="#13203a" stroke-width="2"/>
+  <text class="s" x="300" y="296">470µF</text>
+
+  <!-- Buck -->
+  <rect class="blk" x="470" y="230" width="180" height="110" rx="12" fill="#e3f0f4" stroke="#0a8aa0"/>
+  <text class="bt" x="560" y="275" text-anchor="middle" font-size="16">Buck (DC-DC)</text>
+  <text class="bs" x="560" y="295" text-anchor="middle">step-down 11.1 → 5 V</text>
+  <text class="s" x="560" y="313" text-anchor="middle">set trimpot to 5.0 V</text>
+  <text class="pin" x="476" y="326" fill="#c06a00">IN+</text>
+  <text class="pin" x="644" y="326" text-anchor="end" fill="#0a8aa0">OUT+</text>
+
+  <!-- ESP32 -->
+  <rect class="blk" x="770" y="170" width="350" height="220" rx="14" fill="#dfe9fb" stroke="#1f6feb"/>
+  <text class="bt" x="945" y="200" text-anchor="middle">ESP32-DevKitC V4</text>
+  <text class="pin" x="776" y="246" fill="#0a8aa0">5V / VIN</text>
+  <text class="pin" x="776" y="356" fill="#222831">GND</text>
+  <text class="pin" x="1114" y="246" text-anchor="end" fill="#e23b2e">3V3</text>
+  <!-- internal LDO -->
+  <rect x="900" y="222" width="120" height="56" rx="8" fill="#fff" stroke="#1f6feb" stroke-dasharray="4 4"/>
+  <text x="960" y="246" text-anchor="middle" font-size="12" font-weight="700" fill="#13203a">on-board</text>
+  <text x="960" y="264" text-anchor="middle" font-size="11" fill="#45506a">AMS1117-3.3 LDO</text>
+  <text x="945" y="330" text-anchor="middle" class="s">5.0 V in → 3.3 V out (module runs on 3.3 V)</text>
+
+  <!-- USB -->
+  <rect x="918" y="92" width="54" height="26" rx="4" fill="#b8c0cc" stroke="#5a626b"/>
+  <text x="945" y="110" text-anchor="middle" font-size="11" font-weight="700" fill="#13203a">USB</text>
+
+  <!-- ===== voltage badges ===== -->
+  <rect x="330" y="118" width="110" height="24" rx="12" fill="#f08c00"/><text class="v" x="385" y="135" text-anchor="middle">11.1–12.6 V</text>
+  <rect x="678" y="238" width="60" height="24" rx="12" fill="#0a8aa0"/><text class="v" x="708" y="255" text-anchor="middle">5.0 V</text>
+  <rect x="1150" y="238" width="56" height="24" rx="12" fill="#e23b2e"/><text class="v" x="1178" y="255" text-anchor="middle">3.3 V</text>
+
+  <!-- ===== stub labels ===== -->
+  <text class="t" x="476" y="140" fill="#c06a00">→ TB6612 VM (motors) — full 11.1 V</text>
+  <text class="s" x="476" y="156">(the motor side; see full wiring diagram)</text>
+  <text class="t" x="1210" y="246" fill="#e23b2e">→ 3.3 V logic</text>
+  <text class="s" x="1210" y="263">QTR VCC+LEDON · TB6612 VCC+STBY · button pull-up</text>
+  <text class="warn" x="1210" y="286">(QTR, TB6612, button — not shown here)</text>
+  <text class="s" x="978" y="150">USB 5 V — bench only</text>
+  <text class="warn" x="978" y="167">not together with the buck</text>
+  <text class="t" x="300" y="452" fill="#222831">COMMON GND — battery − · buck · ESP32 all tie here</text>
+
+  <!-- ===== DEEP-DIVE PANEL ===== -->
+  <rect x="26" y="486" width="1508" height="408" rx="10" fill="#ffffff" stroke="#b9c3d2" stroke-width="1.5"/>
+  <rect x="26" y="486" width="1508" height="30" rx="10" fill="#143a63"/>
+  <text x="42" y="507" fill="#fff" font-size="15" font-weight="700">Deep dive — what happens at each stage, and why</text>
+
+  <!-- col 1 -->
+  <text class="h2" x="48" y="548">① The pack (11.1–12.6 V)</text>
+  <text class="t" x="48" y="572">A 3S LiPo = 3 cells in series. Each cell is 3.7 V nominal</text>
+  <text class="t" x="48" y="590">(4.2 V full), so the pack swings <tspan font-weight="700">12.6 V down to ~9.9 V</tspan></text>
+  <text class="t" x="48" y="608">as it drains. 30C × 1.4 Ah ≈ 42 A available — huge headroom.</text>
+  <text class="t" x="48" y="632">The <tspan font-weight="700">KILL switch</tspan> on the + line is your hardware “all stop”,</text>
+  <text class="t" x="48" y="650">independent of any code. The 470 µF cap steadies the rail</text>
+  <text class="t" x="48" y="668">when motors yank current.</text>
+  <text class="t" x="48" y="692">The + rail splits two ways: full voltage to the motors</text>
+  <text class="t" x="48" y="710">(TB6612 VM), and a tap into the buck for the electronics.</text>
+  <text class="warn" x="48" y="736">Never run the ESP32 straight off this rail.</text>
+
+  <line x1="520" y1="528" x2="520" y2="872" stroke="#e1e7f0"/>
+  <!-- col 2 -->
+  <text class="h2" x="544" y="548">② The buck: 11.1 → 5 V</text>
+  <text class="t" x="544" y="572">A buck is a <tspan font-weight="700">switching</tspan> step-down converter: it chops the</text>
+  <text class="t" x="544" y="590">input on/off very fast and filters it to a steady 5 V. Because</text>
+  <text class="t" x="544" y="608">it switches rather than “burns” the extra voltage, it stays</text>
+  <text class="t" x="544" y="626"><tspan font-weight="700">cool and ~85–90 % efficient</tspan> — even dropping 12.6 V → 5 V.</text>
+  <text class="t" x="544" y="650">Your green module (MP1584-style) is <tspan font-weight="700">adjustable</tspan>: turn the</text>
+  <text class="t" x="544" y="668">trimpot until the output reads <tspan font-weight="700">5.0 V</tspan> on a meter — do this</text>
+  <text class="t" x="544" y="686"><tspan font-weight="700">before</tspan> you ever connect it to the ESP32.</text>
+  <text class="t" x="544" y="710">IN+ = pack, IN− = GND, OUT+ = 5 V, OUT− = GND. It needs</text>
+  <text class="t" x="544" y="728">input &gt; output+~1 V, so even at 9.9 V empty it still makes 5 V.</text>
+  <text class="s" x="544" y="752">Size it for ESP32 + QTR emitters (~0.3–0.5 A); 1–2 A is comfy.</text>
+
+  <line x1="1016" y1="528" x2="1016" y2="872" stroke="#e1e7f0"/>
+  <!-- col 3 -->
+  <text class="h2" x="1040" y="548">③ Into the ESP32: 5 → 3.3 V</text>
+  <text class="t" x="1040" y="572">The 5 V enters the board’s <tspan font-weight="700">5V / VIN</tspan> pin. On the board, an</text>
+  <text class="t" x="1040" y="590"><tspan font-weight="700">AMS1117-3.3 regulator</tspan> drops 5 V → 3.3 V, which is the</text>
+  <text class="t" x="1040" y="608">voltage the ESP32 chip actually runs on. It appears on the</text>
+  <text class="t" x="1040" y="626"><tspan font-weight="700">3V3</tspan> pin, which you use to power the QTR, the TB6612’s</text>
+  <text class="t" x="1040" y="644">logic (VCC + STBY) and the button pull-up.</text>
+  <text class="t" x="1040" y="672"><tspan font-weight="700">Why 5 V first, not 12 V straight to VIN?</tspan> The AMS1117 is a</text>
+  <text class="t" x="1040" y="690">linear reg — it burns the voltage difference as heat. From</text>
+  <text class="t" x="1040" y="708">5 V it wastes little; from 12.6 V it would overheat/shut down.</text>
+  <text class="t" x="1040" y="736"><tspan font-weight="700">USB vs buck:</tspan> USB also feeds the 5 V net (for flashing on the</text>
+  <text class="t" x="1040" y="754">bench). Use one at a time — don’t have USB and the buck both</text>
+  <text class="t" x="1040" y="772">driving 5 V together.</text>
+  <text class="warn" x="1040" y="800">All grounds must be common, or nothing shares a reference.</text>
+  <text class="s" x="1040" y="828">Optional: a divider on an ADC pin lets the firmware watch pack V</text>
+  <text class="s" x="1040" y="846">(3S thresholds pre-set in config.h, disabled).</text>
+</svg>

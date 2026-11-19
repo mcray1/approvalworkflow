@@ -120,6 +120,12 @@ GPIO34 floats and the button will read randomly.
 
 ## 2. Power architecture
 
+To understand the power path deeply (battery → buck → ESP32, stage by stage with
+the "why"), see [`docs/power_path.svg`](docs/power_path.svg):
+
+![Power path: battery to ESP32](docs/power_path.svg)
+
+
 Confirmed pack: **3S LiPo, 11.1 V nominal (12.6 V full charge)**, HongJie 501855,
 1400 mAh, 30C, 15.6 Wh. The motor supply and the logic supply split right at the
 battery. The motors run on the full pack voltage (11.1 V, up to 12.6 V charged);
