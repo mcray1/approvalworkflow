@@ -14,6 +14,11 @@ pin, change it in `config.h`, not only here.**
 
 ## Diagram
 
+**New here? Start with the [simple connection map](docs/connection_map.svg)** —
+big blocks, follow the colors, numbered 1–6:
+
+![ESP32 line-follower simple connection map](docs/connection_map.svg)
+
 A complete, color-coded schematic is in [`docs/wiring_diagram.svg`](docs/wiring_diagram.svg)
 (open in a browser to zoom). It shows every connection in the tables below plus
 the power distribution, common ground, and the GPIO34 button circuit.

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 960" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="ah" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#45506a"/>
+    </marker>
+  </defs>
+  <style>
+    .bg{fill:#f4f7fb}
+    .blk{stroke-width:2.5;rx:16}
+    .bt{font-size:21px;font-weight:800;fill:#13203a}
+    .bs{font-size:13px;fill:#45506a}
+    .pin{font-size:12.5px;font-weight:700;fill:#13203a}
+    .wlab{font-size:15px;font-weight:800}
+    .num{font-size:16px;font-weight:800;fill:#fff}
+    .cap{font-size:13px;fill:#45506a}
+    .w{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+  <rect class="bg" x="0" y="0" width="1440" height="960"/>
+  <rect x="0" y="0" width="1440" height="64" fill="#102a47"/>
+  <rect x="0" y="60" width="1440" height="4" fill="#1f6feb"/>
+  <text x="28" y="31" fill="#fff" font-size="25" font-weight="800">How it all connects — simple map</text>
+  <text x="28" y="52" fill="#adc2dd" font-size="14">Follow the colors: 🟠 power in · 🔴 5V/3.3V · 🔵 sensors · 🟣 motor control · 🟢 to motors · ⚫ ground</text>
+
+  <!-- ================= WIRES (drawn first, under blocks) ================= -->
+  <!-- 1 battery + -> TB6612 VM  and  -> buck (orange 11.1V) -->
+  <path class="w" stroke="#f08c00" d="M250,470 C300,470 300,560 360,560"/>
+  <path class="w" stroke="#f08c00" d="M250,440 C560,300 980,300 1040,430"/>
+  <!-- 2 buck 5V -> ESP32 (red) -->
+  <path class="w" stroke="#e23b2e" d="M520,520 C560,520 560,470 600,470"/>
+  <!-- 3 ESP32 3V3 -> QTR and TB6612 (red thin taps) -->
+  <path class="w" stroke="#e23b2e" stroke-width="4" stroke-dasharray="2 7" d="M720,330 C720,250 720,210 720,196"/>
+  <path class="w" stroke="#e23b2e" stroke-width="4" stroke-dasharray="2 7" d="M840,430 C940,430 980,440 1040,452"/>
+  <!-- 4 QTR -> ESP32 (blue, 8 sensors) -->
+  <path class="w" stroke="#1f6feb" d="M700,210 C700,270 690,300 690,330" marker-end="url(#ah)"/>
+  <!-- 5 ESP32 -> TB6612 (purple, 6 control) -->
+  <path class="w" stroke="#8a2be2" d="M840,490 C930,500 980,500 1040,500" marker-end="url(#ah)"/>
+  <!-- 6 TB6612 -> motors (green) -->
+  <path class="w" stroke="#2e8b57" d="M1240,470 C1300,470 1300,360 1340,360" marker-end="url(#ah)"/>
+  <path class="w" stroke="#2e8b57" d="M1240,520 C1300,520 1300,620 1340,620" marker-end="url(#ah)"/>
+  <!-- button -> ESP32 (blue) -->
+  <path class="w" stroke="#1f6feb" stroke-width="5" d="M700,760 C700,700 700,580 700,552" marker-end="url(#ah)"/>
+  <!-- GND bus (black) -->
+  <path class="w" stroke="#222831" stroke-width="7" d="M150,860 H1240"/>
+  <path class="w" stroke="#222831" stroke-width="4" d="M160,500 V860 M420,480 V860 M720,552 V640 M720,730 V860 M1140,510 V860"/>
+
+  <!-- ================= BLOCKS ================= -->
+  <!-- Battery -->
+  <rect class="blk" x="60" y="400" width="190" height="120" rx="16" fill="#e7eaef" stroke="#5a626b"/>
+  <text class="bt" x="155" y="452" text-anchor="middle">Battery</text>
+  <text class="bs" x="155" y="476" text-anchor="middle">3S LiPo 11.1 V</text>
+  <text class="pin" x="238" y="438" text-anchor="end" fill="#c06a00">+</text>
+  <text class="pin" x="238" y="512" text-anchor="end">−</text>
+
+  <!-- Buck -->
+  <rect class="blk" x="360" y="440" width="160" height="100" rx="16" fill="#efe7f6" stroke="#7a4ea0"/>
+  <text class="bt" x="440" y="482" text-anchor="middle" font-size="18">Buck</text>
+  <text class="bs" x="440" y="504" text-anchor="middle">11.1 → 5 V</text>
+
+  <!-- ESP32 -->
+  <rect class="blk" x="600" y="330" width="240" height="222" rx="18" fill="#dfe9fb" stroke="#1f6feb"/>
+  <text class="bt" x="720" y="430" text-anchor="middle" font-size="26">ESP32</text>
+  <text class="bs" x="720" y="456" text-anchor="middle">the brain</text>
+  <text class="pin" x="614" y="470" fill="#c06a00">5V in</text>
+  <text class="pin" x="614" y="340" fill="#e23b2e">3V3 out</text>
+
+  <!-- QTR -->
+  <rect class="blk" x="520" y="110" width="400" height="86" rx="16" fill="#dfe9fb" stroke="#16324e"/>
+  <text class="bt" x="720" y="150" text-anchor="middle">QTR-8RC sensor bar</text>
+  <text class="bs" x="720" y="176" text-anchor="middle">8 eyes watch the line (at the front)</text>
+
+  <!-- TB6612 -->
+  <rect class="blk" x="1040" y="430" width="200" height="140" rx="16" fill="#f6e0e0" stroke="#8f3131"/>
+  <text class="bt" x="1140" y="492" text-anchor="middle" font-size="19">TB6612</text>
+  <text class="bs" x="1140" y="514" text-anchor="middle">motor driver</text>
+  <text class="pin" x="1054" y="454" fill="#f08c00">VM</text>
+
+  <!-- Motors -->
+  <circle cx="1370" cy="360" r="56" fill="#cfd6de" stroke="#8a93a0" stroke-width="2.5"/>
+  <text class="bt" x="1370" y="356" text-anchor="middle" font-size="17">Left</text>
+  <text class="bs" x="1370" y="378" text-anchor="middle">motor</text>
+  <circle cx="1370" cy="620" r="56" fill="#cfd6de" stroke="#8a93a0" stroke-width="2.5"/>
+  <text class="bt" x="1370" y="616" text-anchor="middle" font-size="17">Right</text>
+  <text class="bs" x="1370" y="638" text-anchor="middle">motor</text>
+
+  <!-- Button -->
+  <rect class="blk" x="620" y="760" width="160" height="90" rx="16" fill="#e7eaef" stroke="#5a626b"/>
+  <text class="bt" x="700" y="800" text-anchor="middle" font-size="18">Button</text>
+  <text class="bs" x="700" y="824" text-anchor="middle">start / stop</text>
+
+  <!-- ================= WIRE LABELS + number badges ================= -->
+  <g>
+    <circle cx="470" cy="300" r="15" fill="#f08c00"/><text class="num" x="470" y="306" text-anchor="middle">1</text>
+    <text class="wlab" x="492" y="306" fill="#c06a00">11.1 V power in</text>
+  </g>
+  <g>
+    <circle cx="560" cy="520" r="15" fill="#e23b2e"/><text class="num" x="560" y="526" text-anchor="middle">2</text>
+    <text class="wlab" x="500" y="556" fill="#e23b2e">5 V to ESP32</text>
+  </g>
+  <g>
+    <circle cx="905" cy="430" r="15" fill="#e23b2e"/><text class="num" x="905" y="436" text-anchor="middle">3</text>
+    <text class="wlab" x="860" y="410" fill="#e23b2e">3.3 V to QTR &amp; TB6612</text>
+  </g>
+  <g>
+    <circle cx="640" cy="270" r="15" fill="#1f6feb"/><text class="num" x="640" y="276" text-anchor="middle">4</text>
+    <text class="wlab" x="480" y="276" fill="#1f6feb">8 sensor wires</text>
+  </g>
+  <g>
+    <circle cx="940" cy="500" r="15" fill="#8a2be2"/><text class="num" x="940" y="506" text-anchor="middle">5</text>
+    <text class="wlab" x="880" y="540" fill="#8a2be2">6 control wires</text>
+  </g>
+  <g>
+    <circle cx="1300" cy="440" r="15" fill="#2e8b57"/><text class="num" x="1300" y="446" text-anchor="middle">6</text>
+    <text class="wlab" x="1250" y="430" fill="#2e8b57">power to motors</text>
+  </g>
+  <text class="wlab" x="300" y="890" fill="#222831">⚫ GND — every part shares one ground</text>
+  <text class="wlab" x="724" y="712" fill="#1f6feb" text-anchor="middle">GPIO34</text>
+
+  <!-- read-it note -->
+  <rect x="60" y="600" width="470" height="150" rx="12" fill="#ffffff" stroke="#b9c3d2" stroke-width="1.5"/>
+  <text class="bt" x="80" y="632" font-size="16">Read it like a story</text>
+  <text class="cap" x="80" y="658">1–2–3  Power: battery → buck → 5 V → ESP32 makes 3.3 V.</text>
+  <text class="cap" x="80" y="680">4  The sensor bar tells the ESP32 where the line is.</text>
+  <text class="cap" x="80" y="702">5  The ESP32 tells the TB6612 how to steer.</text>
+  <text class="cap" x="80" y="724">6  The TB6612 powers the two motors.</text>
+  <text class="cap" x="80" y="744">Exact pins: WIRING.md · what to solder: soldering_guide.svg</text>
+</svg>
