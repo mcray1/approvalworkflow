@@ -25,6 +25,11 @@ A **breadboard-style layout** (physical component placement) is in
 
 ![ESP32 line-follower breadboard layout](docs/wiring_breadboard.svg)
 
+A **soldering guide** (what to solder on each part, in order, with technique and
+LiPo safety) is in [`docs/soldering_guide.svg`](docs/soldering_guide.svg):
+
+![ESP32 line-follower soldering guide](docs/soldering_guide.svg)
+
 A **robot assembly view** (top view + side profile with a numbered parts list)
 is in [`docs/robot_layout.svg`](docs/robot_layout.svg). Mechanical dimensions are
 representative — confirm chassis size, wheel diameter and motor dimensions for

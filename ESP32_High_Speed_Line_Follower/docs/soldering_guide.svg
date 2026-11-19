@@ -1,0 +1,256 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1120" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <style>
+    .bg{fill:#f3f6fb}
+    .panel{fill:#ffffff;stroke:#b9c3d2;stroke-width:1.5}
+    .hdr{fill:#7a3e12}
+    .htxt{fill:#fff;font-size:15px;font-weight:700}
+    .h2{fill:#13203a;font-size:14px;font-weight:700}
+    .t{fill:#1c2a44;font-size:12.5px}
+    .tb{fill:#1c2a44;font-size:12.5px;font-weight:700}
+    .s{fill:#5a6b86;font-size:11px}
+    .warn{fill:#a2371b;font-size:12px;font-weight:700}
+    .mod{fill:#eef2f8;stroke:#5a6b86;stroke-width:1.5}
+    .pcbR{fill:#8f3131;stroke:#561b1b;stroke-width:1.5}
+    .pcbG{fill:#2a6e3f;stroke:#184727;stroke-width:1.5}
+    .pcbB{fill:#16324e;stroke:#0c2036;stroke-width:1.5}
+    .pad{fill:#f0c24b;stroke:#8a6512;stroke-width:1}          /* header pad */
+    .joint{fill:#d7dce3;stroke:#7a828c;stroke-width:1.5}       /* solder joint */
+    .wlab{font-size:10.5px;font-weight:700}
+  </style>
+  <rect class="bg" x="0" y="0" width="1600" height="1120"/>
+
+  <!-- header -->
+  <rect x="0" y="0" width="1600" height="66" fill="#5a2e0c"/>
+  <rect x="0" y="62" width="1600" height="4" fill="#e07b2a"/>
+  <text x="24" y="31" fill="#fff" font-size="24" font-weight="700">ESP32 Line-Follower — Soldering Guide</text>
+  <text x="24" y="54" fill="#f2d3b4" font-size="13">What to solder on each part, in order, with technique &amp; LiPo safety. Electrical routing is in WIRING.md / wiring_*.svg — this shows the iron work.</text>
+  <text x="1576" y="40" fill="#fff" font-size="13" font-weight="700" text-anchor="end">● gold = header pin · ○ silver = wire-to-pad joint</text>
+
+  <!-- ============ LEFT: order / technique / safety ============ -->
+  <rect class="panel" x="18" y="82" width="420" height="1020" rx="8"/>
+  <rect class="hdr"   x="18" y="82" width="420" height="30" rx="8"/>
+  <text class="htxt"  x="34" y="103">Solder in this order</text>
+  <g>
+    <text class="t" x="34"  y="140">1. ESP32 — solder both male header rows (pins down),</text>
+    <text class="s" x="48"  y="156">seated in the breadboard so they stay straight.</text>
+    <text class="t" x="34"  y="178">2. TB6612 &amp; buck — solder their header pins, also</text>
+    <text class="s" x="48"  y="194">seated in the breadboard. (Yours already have headers.)</text>
+    <text class="t" x="34"  y="216">3. QTR-8RC — solder a right-angle header so the bar</text>
+    <text class="s" x="48"  y="232">mounts low &amp; flat at the front.</text>
+    <text class="t" x="34"  y="254">4. Motors — solder red/black leads + a 0.1 µF cap</text>
+    <text class="s" x="48"  y="270">across the tabs; heatshrink.</text>
+    <text class="t" x="34"  y="292">5. Button + 10 kΩ pull-up at the GPIO34 node.</text>
+    <text class="t" x="34"  y="314">6. Logic ties — LEDON→3V3 and STBY→3V3 jumpers.</text>
+    <text class="t" x="34"  y="336">7. Power harness — buck IN/OUT, VM feed, GND bus.</text>
+    <text class="tb" x="34" y="358" fill="#a2371b">8. LAST: battery connector + inline kill switch,</text>
+    <text class="warn" x="48" y="374">with the LiPo DISCONNECTED.</text>
+    <text class="s" x="34"  y="396">Then inspect every joint &amp; meter for bridges before power.</text>
+  </g>
+
+  <rect x="34" y="416" width="388" height="1" fill="#d6deea"/>
+  <text class="h2" x="34" y="444">Technique</text>
+  <g>
+    <text class="t" x="34" y="468">• Iron 330–370 °C; keep the tip tinned &amp; clean.</text>
+    <text class="t" x="34" y="490">• Heat the pad AND pin together ~1 s, then feed solder</text>
+    <text class="s" x="48" y="506">to the joint (not the tip). 1–2 s total per joint.</text>
+    <text class="t" x="34" y="528">• Use flux. A good joint is shiny and “volcano” shaped.</text>
+    <text class="t" x="34" y="550">• Dull / cracked = cold joint → reheat. Blob across two</text>
+    <text class="s" x="48" y="566">pads = bridge → wick it off (watch the TB6612 fine rows).</text>
+    <text class="t" x="34" y="588">• Keep heat BRIEF on the QTR board (protect the IR LEDs).</text>
+    <text class="t" x="34" y="610">• Tin stranded wire ends before soldering to pads.</text>
+  </g>
+
+  <rect x="34" y="632" width="388" height="1" fill="#d6deea"/>
+  <text class="h2" x="34" y="660" fill="#a2371b">Safety (LiPo + iron)</text>
+  <g>
+    <text class="warn" x="34" y="684">• NEVER solder with the LiPo connected.</text>
+    <text class="t"    x="34" y="706">• Never let the battery + and − touch — insulate every</text>
+    <text class="s"    x="48" y="722">exposed joint with heatshrink.</text>
+    <text class="t"    x="34" y="744">• Work one battery wire at a time; tin, sleeve, done.</text>
+    <text class="t"    x="34" y="766">• Ventilate; solder fumes are nasty. Wash hands after.</text>
+    <text class="t"    x="34" y="788">• Confirm polarity with a meter before first power-up.</text>
+  </g>
+
+  <rect x="34" y="810" width="388" height="1" fill="#d6deea"/>
+  <text class="h2" x="34" y="838">Legend</text>
+  <g>
+    <circle class="pad" cx="46" cy="862" r="6"/><text class="t" x="62" y="866">Gold = solder a male header pin here</text>
+    <circle class="joint" cx="46" cy="888" r="6"/><text class="t" x="62" y="892">Silver = solder a wire to this pad</text>
+  </g>
+  <g>
+    <rect x="34" y="908" width="24" height="7" fill="#1f6feb"/><text class="t" x="66" y="915">sensor</text>
+    <rect x="150" y="908" width="24" height="7" fill="#8a2be2"/><text class="t" x="182" y="915">motor ctrl</text>
+    <rect x="300" y="908" width="24" height="7" fill="#2e8b57"/><text class="t" x="332" y="915">motor out</text>
+    <rect x="34" y="930" width="24" height="7" fill="#e23b2e"/><text class="t" x="66" y="937">3.3 V</text>
+    <rect x="150" y="930" width="24" height="7" fill="#f08c00"/><text class="t" x="182" y="937">11.1 V (VM)</text>
+    <rect x="300" y="930" width="24" height="7" fill="#222831"/><text class="t" x="332" y="937">GND</text>
+  </g>
+  <text class="s" x="34" y="968">Pin NAMES vary by board — always match your module's silkscreen.</text>
+  <text class="s" x="34" y="986">Full pin table &amp; nets: WIRING.md and docs/wiring_breadboard.svg.</text>
+  <text class="s" x="34" y="1004">Need-solder count: ESP32 ~38, TB6612 16, buck 4, QTR ~11, motors 4.</text>
+
+  <!-- ============ MODULE CARDS (right grid) ============ -->
+  <!-- col1 x=452 w=556 ; col2 x=1020 w=562 ; rows y=82,330,578,826 h=238 -->
+
+  <!-- ESP32 -->
+  <g>
+    <rect class="panel" x="452" y="82" width="556" height="238" rx="8"/>
+    <rect class="hdr" x="452" y="82" width="556" height="28" rx="8"/>
+    <text class="htxt" x="468" y="102">1 · ESP32-DevKitC — header rows</text>
+    <rect class="pcbB" x="500" y="140" width="150" height="150" rx="6"/>
+    <rect x="555" y="128" width="40" height="14" rx="2" fill="#b8c0cc"/>
+    <g>
+      <!-- two rows of gold pads -->
+      <g>
+        <circle class="pad" cx="512" cy="158" r="5"/><circle class="pad" cx="512" cy="180" r="5"/><circle class="pad" cx="512" cy="202" r="5"/><circle class="pad" cx="512" cy="224" r="5"/><circle class="pad" cx="512" cy="246" r="5"/><circle class="pad" cx="512" cy="268" r="5"/>
+        <circle class="pad" cx="638" cy="158" r="5"/><circle class="pad" cx="638" cy="180" r="5"/><circle class="pad" cx="638" cy="202" r="5"/><circle class="pad" cx="638" cy="224" r="5"/><circle class="pad" cx="638" cy="246" r="5"/><circle class="pad" cx="638" cy="268" r="5"/>
+      </g>
+      <text class="s" x="575" y="214" text-anchor="middle" fill="#cfe0f2">USB top</text>
+    </g>
+    <text class="tb" x="680" y="162">Solder BOTH male header strips to the</text>
+    <text class="tb" x="680" y="180">two long pin rows, pins pointing DOWN.</text>
+    <text class="t"  x="680" y="204">• Seat the headers in the breadboard first,</text>
+    <text class="s"  x="694" y="220">then solder — keeps rows dead straight.</text>
+    <text class="t"  x="680" y="242">• Solder every pin (even unused) for grip.</text>
+    <text class="t"  x="680" y="266">• Tack one end pin, check it sits flat,</text>
+    <text class="s"  x="694" y="282">then do the rest.</text>
+  </g>
+
+  <!-- QTR -->
+  <g>
+    <rect class="panel" x="1020" y="82" width="562" height="238" rx="8"/>
+    <rect class="hdr" x="1020" y="82" width="562" height="28" rx="8"/>
+    <text class="htxt" x="1036" y="102">3 · Pololu QTR-8RC — right-angle header</text>
+    <rect class="pcbB" x="1040" y="150" width="250" height="34" rx="4"/>
+    <g fill="#e9eef5"><circle cx="1062" cy="167" r="4"/><circle cx="1090" cy="167" r="4"/><circle cx="1118" cy="167" r="4"/><circle cx="1146" cy="167" r="4"/><circle cx="1174" cy="167" r="4"/><circle cx="1202" cy="167" r="4"/><circle cx="1230" cy="167" r="4"/><circle cx="1258" cy="167" r="4"/></g>
+    <g><circle class="pad" cx="1050" cy="198" r="4"/><circle class="pad" cx="1066" cy="198" r="4"/><circle class="pad" cx="1082" cy="198" r="4"/><circle class="pad" cx="1098" cy="198" r="4"/><circle class="pad" cx="1114" cy="198" r="4"/><circle class="pad" cx="1130" cy="198" r="4"/><circle class="pad" cx="1146" cy="198" r="4"/><circle class="pad" cx="1162" cy="198" r="4"/><circle class="pad" cx="1178" cy="198" r="4"/><circle class="pad" cx="1194" cy="198" r="4"/><circle class="pad" cx="1210" cy="198" r="4"/></g>
+    <text class="s" x="1050" y="222">control-side pads: VCC · GND · LEDON · S1–S8</text>
+    <text class="tb" x="1310" y="150">Solder a RIGHT-ANGLE male header to</text>
+    <text class="tb" x="1310" y="168">the control-side pads, so the array sits</text>
+    <text class="tb" x="1310" y="186">low &amp; flat (~2–4 mm) at the front.</text>
+    <text class="t"  x="1310" y="210">• Keep each joint brief — don't cook the</text>
+    <text class="s"  x="1324" y="226">IR emitters/receivers.</text>
+    <text class="t"  x="1310" y="250">• Solder a short jumper LEDON → 3V3</text>
+    <text class="s"  x="1324" y="266">(emitters always on).</text>
+    <text class="s"  x="1310" y="292">Check your board's silk: pad order varies.</text>
+  </g>
+
+  <!-- TB6612 -->
+  <g>
+    <rect class="panel" x="452" y="330" width="556" height="238" rx="8"/>
+    <rect class="hdr" x="452" y="330" width="556" height="28" rx="8"/>
+    <text class="htxt" x="468" y="350">2 · TB6612FNG breakout — pins &amp; wires</text>
+    <rect class="pcbR" x="500" y="388" width="150" height="150" rx="6"/>
+    <g><circle class="pad" cx="510" cy="400" r="5"/><circle class="pad" cx="510" cy="420" r="5"/><circle class="pad" cx="510" cy="440" r="5"/><circle class="pad" cx="510" cy="460" r="5"/><circle class="pad" cx="510" cy="480" r="5"/><circle class="pad" cx="510" cy="500" r="5"/><circle class="pad" cx="510" cy="520" r="5"/>
+      <circle class="pad" cx="640" cy="400" r="5"/><circle class="pad" cx="640" cy="420" r="5"/><circle class="pad" cx="640" cy="440" r="5"/><circle class="pad" cx="640" cy="460" r="5"/><circle class="pad" cx="640" cy="480" r="5"/><circle class="pad" cx="640" cy="500" r="5"/><circle class="pad" cx="640" cy="520" r="5"/></g>
+    <text class="s" x="575" y="468" text-anchor="middle" fill="#fff">TB6612</text>
+    <text class="tb" x="680" y="402">Solder 8-pin male headers to BOTH rows</text>
+    <text class="s"  x="680" y="418">(already done on your board).</text>
+    <text class="t"  x="680" y="440"><tspan fill="#2e8b57" font-weight="700">AO1/AO2</tspan> → left motor · <tspan fill="#2e8b57" font-weight="700">BO1/BO2</tspan> → right</text>
+    <text class="t"  x="680" y="462"><tspan fill="#f08c00" font-weight="700">VM</tspan> ← 11.1 V · <tspan font-weight="700">GND</tspan> ← common</text>
+    <text class="t"  x="680" y="484"><tspan fill="#e23b2e" font-weight="700">VCC + STBY</tspan> → 3V3</text>
+    <text class="t"  x="680" y="506"><tspan fill="#8a2be2" font-weight="700">PWMA/AIN1/AIN2/PWMB/BIN1/BIN2</tspan> → ESP32</text>
+    <text class="warn" x="680" y="532">⚠ Check for BRIDGES between the fine pins.</text>
+  </g>
+
+  <!-- Buck -->
+  <g>
+    <rect class="panel" x="1020" y="330" width="562" height="238" rx="8"/>
+    <rect class="hdr" x="1020" y="330" width="562" height="28" rx="8"/>
+    <text class="htxt" x="1036" y="350">7 · Buck 11.1→5 V — 4 pads</text>
+    <rect class="pcbG" x="1040" y="388" width="130" height="120" rx="6"/>
+    <circle cx="1070" cy="412" r="7" fill="#1f6feb" stroke="#0c2036"/>
+    <text class="s" x="1070" y="434" text-anchor="middle" fill="#dff0dd">trimpot</text>
+    <g><circle class="joint" cx="1052" cy="492" r="5"/><circle class="joint" cx="1078" cy="492" r="5"/><circle class="joint" cx="1130" cy="492" r="5"/><circle class="joint" cx="1156" cy="492" r="5"/></g>
+    <text class="s" x="1046" y="482">IN+  IN−</text><text class="s" x="1124" y="482">OUT+ OUT−</text>
+    <text class="t" x="1196" y="402"><tspan fill="#f08c00" font-weight="700">IN+</tspan> ← battery 11.1 V · <tspan font-weight="700">IN−</tspan> ← GND</text>
+    <text class="t" x="1196" y="424"><tspan fill="#e23b2e" font-weight="700">OUT+</tspan> → ESP32 5V/VIN · <tspan font-weight="700">OUT−</tspan> → GND</text>
+    <text class="warn" x="1196" y="452">Set OUT to 5.0 V (trimpot) BEFORE</text>
+    <text class="warn" x="1196" y="468">wiring the ESP32 — meter it first.</text>
+    <text class="t" x="1196" y="494">• Solder headers or wires; keep IN &amp; OUT</text>
+    <text class="s" x="1210" y="510">clear of each other, don't bridge.</text>
+  </g>
+
+  <!-- Motors -->
+  <g>
+    <rect class="panel" x="452" y="578" width="556" height="238" rx="8"/>
+    <rect class="hdr" x="452" y="578" width="556" height="28" rx="8"/>
+    <text class="htxt" x="468" y="598">4 · Gear motors ×2 — leads + cap</text>
+    <rect class="mod" x="500" y="636" width="120" height="70" rx="10"/>
+    <text class="s" x="560" y="676" text-anchor="middle">motor</text>
+    <circle class="joint" cx="500" cy="651" r="5"/><circle class="joint" cx="500" cy="691" r="5"/>
+    <rect x="474" y="664" width="26" height="14" rx="3" fill="#e9eef5" stroke="#8a93a0"/><text class="s" x="487" y="675" text-anchor="middle">0.1µF</text>
+    <path d="M500,651 h-26 v13 M500,691 h-26 v-13" stroke="#8a93a0" fill="none"/>
+    <text class="tb" x="648" y="640">Tin both motor tabs, then solder the</text>
+    <text class="tb" x="648" y="658">red/black leads (keep them short).</text>
+    <text class="t"  x="648" y="682">• Solder a <tspan font-weight="700">0.1 µF ceramic ACROSS</tspan> the two</text>
+    <text class="s"  x="662" y="698">tabs — kills brush noise (recommended).</text>
+    <text class="t"  x="648" y="722">• Heatshrink each tab; strain-relieve leads.</text>
+    <text class="t"  x="648" y="746">• Left motor leads → <tspan fill="#2e8b57" font-weight="700">AO1/AO2</tspan>,</text>
+    <text class="t"  x="648" y="768">  right motor leads → <tspan fill="#2e8b57" font-weight="700">BO1/BO2</tspan>.</text>
+    <text class="s"  x="648" y="792">(Direction is fixed later in config.h, not by swapping.)</text>
+  </g>
+
+  <!-- Button + resistor -->
+  <g>
+    <rect class="panel" x="1020" y="578" width="562" height="238" rx="8"/>
+    <rect class="hdr" x="1020" y="578" width="562" height="28" rx="8"/>
+    <text class="htxt" x="1036" y="598">5 · Start/Stop button + 10 kΩ</text>
+    <!-- mini schematic -->
+    <line x1="1060" y1="648" x2="1060" y2="672" stroke="#e23b2e" stroke-width="2.5"/>
+    <text class="s" x="1066" y="646">3V3</text>
+    <polyline points="1060,672 1050,678 1070,686 1050,694 1070,702 1060,708" fill="none" stroke="#1c2a44" stroke-width="2"/>
+    <text class="s" x="1076" y="692">10 kΩ</text>
+    <circle class="joint" cx="1060" cy="722" r="5"/>
+    <line x1="1060" y1="722" x2="1150" y2="722" stroke="#1f6feb" stroke-width="2.5"/>
+    <text class="wlab" x="1120" y="716" fill="#1f6feb">→ GPIO34</text>
+    <rect x="1044" y="736" width="32" height="26" rx="4" fill="#2b3442"/><circle cx="1060" cy="749" r="7" fill="#c7ccd4"/>
+    <line x1="1060" y1="762" x2="1060" y2="786" stroke="#222831" stroke-width="2.5"/>
+    <text class="s" x="1066" y="782">GND</text>
+    <text class="tb" x="1180" y="646">Build the pull-up node:</text>
+    <text class="t"  x="1180" y="670">• 10 kΩ between <tspan fill="#e23b2e" font-weight="700">3V3</tspan> and the node.</text>
+    <text class="t"  x="1180" y="692">• Node → <tspan fill="#1f6feb" font-weight="700">GPIO34</tspan>.</text>
+    <text class="t"  x="1180" y="714">• Button between node and <tspan font-weight="700">GND</tspan>.</text>
+    <text class="t"  x="1180" y="738">• On a mini protoboard or inline with</text>
+    <text class="s"  x="1194" y="754">heatshrink. Momentary (N.O.) button.</text>
+    <text class="s"  x="1180" y="784">GPIO34 is input-only — the pull-up is required.</text>
+  </g>
+
+  <!-- Power harness / battery + kill -->
+  <g>
+    <rect class="panel" x="452" y="826" width="556" height="238" rx="8"/>
+    <rect class="hdr" x="452" y="826" width="556" height="28" rx="8"/>
+    <text class="htxt" x="468" y="846">8 · Power harness + battery (LAST)</text>
+    <!-- battery conn -> kill -> split -->
+    <rect class="mod" x="486" y="888" width="80" height="48" rx="6"/><text class="s" x="526" y="916" text-anchor="middle">LiPo plug</text>
+    <!-- + line (orange): plug -> kill -> split to VM and buck IN+ -->
+    <line x1="566" y1="900" x2="606" y2="900" stroke="#f08c00" stroke-width="3"/>
+    <rect x="606" y="888" width="40" height="24" rx="4" fill="#b23b3b" stroke="#6e1f1f"/><text class="s" x="626" y="904" text-anchor="middle" fill="#fff">KILL</text>
+    <path d="M646,900 h30 M676,900 v-10 h20 M676,900 v10 h20" stroke="#f08c00" stroke-width="3" fill="none"/>
+    <text class="wlab" x="700" y="894" fill="#c06a00">→ TB6612 VM</text>
+    <text class="wlab" x="700" y="918" fill="#c06a00">→ Buck IN+</text>
+    <!-- − line (black): plug -> GND bus -->
+    <line x1="566" y1="926" x2="676" y2="926" stroke="#222831" stroke-width="3"/>
+    <text class="wlab" x="700" y="930" fill="#222831">→ GND bus</text>
+    <text class="tb" x="468" y="968" fill="#a2371b">Do this with the LiPo UNPLUGGED.</text>
+    <text class="t"  x="468" y="990">• Solder the mating connector to the harness, polarity-correct.</text>
+    <text class="t"  x="468" y="1010">• Inline KILL switch on the + line. + branches to VM and buck IN+.</text>
+    <text class="t"  x="468" y="1030">• Battery − → the common GND bus (ESP32 · TB6612 · buck · QTR).</text>
+    <text class="warn" x="468" y="1052">• Heatshrink every joint. Never let + touch −. Meter polarity first.</text>
+  </g>
+
+  <!-- final card: inspection -->
+  <g>
+    <rect class="panel" x="1020" y="826" width="562" height="238" rx="8"/>
+    <rect class="hdr" x="1020" y="826" width="562" height="28" rx="8"/>
+    <text class="htxt" x="1036" y="846">Before power — inspect</text>
+    <text class="t" x="1036" y="884">☐ Every joint shiny &amp; solid (tug-test leads gently).</text>
+    <text class="t" x="1036" y="908">☐ No solder bridges — eyeball + meter continuity on the</text>
+    <text class="s" x="1050" y="924">TB6612 and buck pads especially.</text>
+    <text class="t" x="1036" y="948">☐ Buck OUT = 5.0 V (no ESP32 attached yet).</text>
+    <text class="t" x="1036" y="972">☐ Common GND continuous across all boards.</text>
+    <text class="t" x="1036" y="996">☐ LEDON→3V3 and STBY→3V3 jumpers present.</text>
+    <text class="t" x="1036" y="1020">☐ Battery connector polarity correct (meter it).</text>
+    <text class="s" x="1036" y="1048">Then power up following TEST_PLAN.md Test 1 (logic first, motors off).</text>
+  </g>
+</svg>
