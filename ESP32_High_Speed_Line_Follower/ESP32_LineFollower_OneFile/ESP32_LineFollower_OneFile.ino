@@ -37,7 +37,10 @@ static const uint8_t LEFT_PWM_PIN  = 25;   // PWMA
 static const uint8_t RIGHT_IN1_PIN = 12;   // BIN1
 static const uint8_t RIGHT_IN2_PIN = 13;   // BIN2
 static const uint8_t RIGHT_PWM_PIN = 14;   // PWMB
-static const int8_t  STBY_PIN      = 33;   // HIGH = driver enabled
+// STBY: tie the TB6612 STBY pin DIRECTLY to 3.3 V (driver always enabled) and
+// leave this at -1. Motors still only move when the firmware commands them.
+// (Set this to a GPIO only if you later want software standby control.)
+static const int8_t  STBY_PIN      = -1;   // -1 = STBY tied to 3.3 V in hardware
 
 // Flip these in Test 4 if a wheel runs backwards (don't rewire):
 static bool LEFT_INVERT  = false;
