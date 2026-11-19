@@ -289,11 +289,15 @@ constexpr bool     ENABLE_FINISH_LINE  = false;
 
 // Battery monitoring via ADC voltage divider. Disabled until divider + pin are
 // confirmed safe for the ESP32 (<= 3.3 V at the pin).
+// Pack in use: 3S LiPo, 11.1 V nominal (12.6 V full charge), 1400 mAh 30C.
+// Divider must keep the full-charge 12.6 V under 3.3 V at the ADC pin:
+//   e.g. R1=100k, R2=33k -> ratio 4.03 -> 12.6 V / 4.03 = 3.13 V (safe).
+// Warn/stop below are 3S thresholds (3.5 V / 3.2 V per cell). CONFIRM on bench.
 constexpr bool     ENABLE_BATTERY_MON  = false;
 constexpr uint8_t  BATTERY_ADC_PIN     = 35;     // input-only ADC1 pin, CONFIRM
-constexpr float    BATTERY_DIVIDER     = 11.0f;  // (R1+R2)/R2, CONFIRM
-constexpr float    BATTERY_WARN_V      = 7.0f;   // CONFIRM for your pack
-constexpr float    BATTERY_STOP_V      = 6.6f;   // CONFIRM for your pack
+constexpr float    BATTERY_DIVIDER     = 4.03f;  // (R1+R2)/R2 = 133k/33k, CONFIRM
+constexpr float    BATTERY_WARN_V      = 10.5f;  // 3S ~3.5 V/cell, CONFIRM
+constexpr float    BATTERY_STOP_V      = 9.6f;   // 3S ~3.2 V/cell, CONFIRM
 
 // Wheel encoders. Interface reserved only; not required for base operation.
 constexpr bool     ENABLE_ENCODERS     = false;

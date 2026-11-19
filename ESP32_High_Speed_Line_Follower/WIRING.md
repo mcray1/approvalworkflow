@@ -110,16 +110,18 @@ GPIO34 floats and the button will read randomly.
 
 ## 2. Power architecture
 
-For a **12 V battery** (the assumed pack), the motor supply and the logic supply
-split right at the battery. The motors run on the full 12 V; the logic runs on
-3.3 V, reached via a **12 V→5 V buck converter** into the ESP32's 5V/VIN pin,
-whose on-board regulator then produces 3.3 V. **Never feed 12 V to VIN** — the
-ESP32's on-board 3.3 V regulator would overheat.
+Confirmed pack: **3S LiPo, 11.1 V nominal (12.6 V full charge)**, HongJie 501855,
+1400 mAh, 30C, 15.6 Wh. The motor supply and the logic supply split right at the
+battery. The motors run on the full pack voltage (11.1 V, up to 12.6 V charged);
+the logic runs on 3.3 V, reached via an **11.1 V→5 V buck converter** into the
+ESP32's 5V/VIN pin, whose on-board regulator then produces 3.3 V. **Never feed
+the raw pack (11–12.6 V) to VIN** — the ESP32's on-board 3.3 V regulator would
+overheat.
 
 ```
- 12 V battery (+)──┬─────────────── 12 V ───────────────► TB6612 VM ──► motors
-                   │
-                   └── 12 V ──►[ Buck 12 V→5 V ]── 5 V ──► ESP32 5V/VIN
+ 3S 11.1 V (+)──┬──────────── 11.1 V ────────────► TB6612 VM ──► motors
+                │
+                └── 11.1 V ──►[ Buck 11.1 V→5 V ]── 5 V ──► ESP32 5V/VIN
                                                               │ (on-board 3.3 V reg)
                                                      ESP32 3V3-out
                                                               │ 3.3 V
@@ -127,35 +129,40 @@ ESP32's on-board 3.3 V regulator would overheat.
                                    QTR-8RC VCC          TB6612 VCC/STBY    GPIO34 pull-up
                                    QTR-8RC LEDON
 
- 12 V battery (−)────────────────── COMMON GND ───► ESP32 · QTR · TB6612 · buck
+ 3S 11.1 V (−)────────────────── COMMON GND ───► ESP32 · QTR · TB6612 · buck
 ```
 
 Requirements:
 - **Common ground** across ESP32, TB6612, QTR board, buck converter and battery −.
-- **Motor supply = VM = 12 V** (direct from the pack). TB6612 `VM` is rated to
-  ~15 V, so 12 V is fine; **confirm your motors are rated for 12 V.**
-- **Logic supply via a fixed 12 V→5 V buck module** into ESP32 `5V`/`VIN`.
+- **Motor supply = VM = 11.1 V** (direct from the pack, 12.6 V fully charged).
+  TB6612 `VM` is rated to ~15 V, so this is fine. Motors are rated 6–12 V; at full
+  charge (12.6 V) they sit just above 12 V — fine for short race bursts, **but
+  confirm your motors tolerate it.**
+- **Logic supply via an 11.1 V→5 V buck module** into ESP32 `5V`/`VIN`.
   Size the buck for the ESP32 **plus** everything on the 3.3 V rail (QTR emitters
   can draw ~100 mA) — a 1–2 A module is comfortable. Confirm it reads ~5 V under
-  load before connecting the ESP32. Do **not** run the ESP32 from
-  the 12 V pack directly, and do **not** use a linear regulator from 12 V (it
-  would dissipate a lot of heat).
+  load before connecting the ESP32 (if it's an adjustable module such as an
+  MP1584, set the trimpot to 5.0 V first). Do **not** run the ESP32 from the raw
+  pack, and do **not** use a linear regulator from 11–12.6 V (it would get very
+  hot).
 - **3.3 V comes from the ESP32's on-board regulator** (`3V3` pin) and feeds QTR
   VCC + LEDON, TB6612 VCC + STBY and the button pull-up. If the on-board 3.3 V
   regulator can't supply the QTR reliably, add a separate 3.3 V buck/LDO from the
   5 V rail for the sensor board.
 - Separate the **motor supply (VM)** from the **logic supply** as above — motors
   inject noise and brownouts reset the ESP32.
-- **Decoupling:** place a bulk electrolytic (≥ 470 µF, voltage-rated for 12 V)
-  across `VM`/`GND` at the driver, plus a 0.1 µF ceramic close to `VCC`/`GND`.
-- Size the pack for stall current of both motors with margin (**CONFIRM** motor
-  stall current from the datasheet).
+- **Decoupling:** place a bulk electrolytic (≥ 470 µF, rated ≥ 16 V for a 12.6 V
+  pack) across `VM`/`GND` at the driver, plus a 0.1 µF ceramic close to `VCC`/`GND`.
+- The pack (1400 mAh, 30C → ~42 A max) easily covers two small gear motors;
+  runtime is modest (15.6 Wh) — fine for laps. **LiPo care:** balance-charge, and
+  don't discharge below ~9.9 V (3.3 V/cell). The 3S battery-monitor thresholds are
+  pre-set (disabled) in `config.h` if you add a divider later.
 
 ## 3. Electrical precautions checklist
 
 - [ ] QTR logic at 3.3 V (no 5 V on ESP32 pins).
-- [ ] **12 V→5 V buck into ESP32 5V/VIN — never 12 V directly to VIN.**
-- [ ] Buck output ≈ 5 V under load; sized for ESP32 + QTR emitters.
+- [ ] **11.1 V→5 V buck into ESP32 5V/VIN — never the raw pack to VIN.**
+- [ ] Buck output ≈ 5 V under load (set the trimpot if adjustable); sized for ESP32 + QTR emitters.
 - [ ] External 10 kΩ pull-up on GPIO34.
 - [ ] `STBY` HIGH (or GPIO-controlled) — motors do nothing otherwise.
 - [ ] Common ground verified with a meter before applying motor power.

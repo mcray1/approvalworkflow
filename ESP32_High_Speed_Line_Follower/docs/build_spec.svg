@@ -30,7 +30,7 @@
   <rect x="0" y="0" width="1600" height="74" fill="#102a47"/>
   <rect x="0" y="70" width="1600" height="4" fill="#1f6feb"/>
   <text x="24" y="34" fill="#ffffff" font-size="26" font-weight="700">ESP32 High-Speed Line-Following Robot</text>
-  <text x="24" y="58" fill="#adc2dd" font-size="14">Build &amp; Assembly Reference — dimensions are PROPOSED (verify with actual parts) · pins per config.h · battery to be confirmed</text>
+  <text x="24" y="58" fill="#adc2dd" font-size="14">Build &amp; Assembly Reference — dimensions are PROPOSED (verify with actual parts) · pins per config.h · battery: 3S LiPo 11.1 V</text>
   <text x="1576" y="34" fill="#ffffff" font-size="14" font-weight="700" text-anchor="end">Competition build</text>
   <text x="1576" y="56" fill="#adc2dd" font-size="12" text-anchor="end">QTR-8RC · TB6612FNG · 200 Hz PID</text>
 
@@ -101,11 +101,11 @@
       <text class="rowb" x="376" y="327">Sensor height (track)</text><text class="row" x="676" y="327" text-anchor="end">2 – 4 mm</text>
       <text class="rowb" x="376" y="357">Est. weight</text>          <text class="row" x="676" y="357" text-anchor="end">≈ 180 – 240 g</text>
       <text class="rowb" x="376" y="387">Chassis material</text>     <text class="row" x="676" y="387" text-anchor="end">Carbon / FR4</text>
-      <text class="rowb" x="376" y="417">Battery</text>              <text class="row" x="676" y="417" text-anchor="end" fill="#b23b3b">CONFIRM</text>
+      <text class="rowb" x="376" y="417">Battery</text>              <text class="row" x="676" y="417" text-anchor="end">3S LiPo 11.1 V</text>
       <text class="rowb" x="376" y="447">Wheelbase / track</text>    <text class="row" x="676" y="447" text-anchor="end">verify</text>
     </g>
     <line x1="360" y1="460" x2="690" y2="460" stroke="#d6deea"/>
-    <text class="small" x="376" y="480">Battery: 2S LiPo 7.4 V or 12 V — sets VM &amp; buck input.</text>
+    <text class="small" x="376" y="480">Battery: 3S LiPo 11.1 V (12.6 V full) · 1400 mAh 30C · 15.6 Wh.</text>
   </g>
 
   <!-- Exploded / assembly order -->
@@ -121,7 +121,7 @@
   <!-- 1 Battery -->
   <polygon class="batt" points="760,150 980,150 940,172 720,172"/>
   <rect x="720" y="172" width="220" height="9" fill="#444b54"/>
-  <path class="lead" d="M940,160 H1020"/><text class="row" x="1026" y="156">Battery pack — velcro, modular</text><text class="small" x="1026" y="172">2S LiPo 7.4 V or 12 V (confirm)</text>
+  <path class="lead" d="M940,160 H1020"/><text class="row" x="1026" y="156">Battery pack — velcro, modular</text><text class="small" x="1026" y="172">3S LiPo 11.1 V · 1400 mAh 30C</text>
 
   <!-- 2 ESP32 -->
   <polygon class="pcb" points="772,196 968,196 934,214 738,214"/>
@@ -203,7 +203,7 @@
     <text class="rowb" x="34" y="593">Line sensor</text>     <text class="row" x="432" y="593" text-anchor="end">Pololu QTR-8RC (8-ch)</text>
     <text class="rowb" x="34" y="617">Motor driver</text>    <text class="row" x="432" y="617" text-anchor="end">TB6612FNG dual H-bridge</text>
     <text class="rowb" x="34" y="641">Motors</text>          <text class="row" x="432" y="641" text-anchor="end">2× DC gear 6–12 V (verify)</text>
-    <text class="rowb" x="34" y="665">Battery</text>         <text class="row" x="432" y="665" text-anchor="end" fill="#b23b3b">2S 7.4 V or 12 V — confirm</text>
+    <text class="rowb" x="34" y="665">Battery</text>         <text class="row" x="432" y="665" text-anchor="end">3S LiPo 11.1 V (12.6 V)</text>
     <text class="rowb" x="34" y="689">Control interval</text><text class="row" x="432" y="689" text-anchor="end">5 ms (200 Hz)</text>
     <text class="rowb" x="34" y="713">Start / Max PWM</text> <text class="row" x="432" y="713" text-anchor="end">100 / 200 (of 255)</text>
     <text class="rowb" x="34" y="737">Recovery timeout</text><text class="row" x="432" y="737" text-anchor="end">1.2 s → safe stop</text>
@@ -336,7 +336,7 @@
     <text class="tiny" x="0" y="26">0</text><text class="tiny" x="36" y="26">10</text><text class="tiny" x="76" y="26">20</text><text class="tiny" x="116" y="26">30</text><text class="tiny" x="156" y="26">40</text><text class="tiny" x="196" y="26">50 mm</text>
   </g>
   <text class="small" x="1148" y="982">• All “proposed” sizes are design reference — verify actual parts.</text>
-  <text class="small" x="1148" y="1000">• Confirm battery (2S 7.4 V or 12 V) → sets VM &amp; buck input.</text>
+  <text class="small" x="1148" y="1000">• Battery 3S LiPo 11.1 V (12.6 V full) → VM; buck 11.1→5 V → ESP32.</text>
   <text class="small" x="1148" y="1018">• Nylon standoffs on carbon fiber; front caster + low, central CG.</text>
   <text class="small" x="1148" y="1036">• Pins = config.h · wiring = WIRING.md &amp; docs/wiring_*.svg.</text>
 

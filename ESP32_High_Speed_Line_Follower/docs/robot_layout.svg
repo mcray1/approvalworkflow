@@ -79,7 +79,7 @@
 
   <!-- battery -->
   <rect class="batt" x="424" y="556" width="192" height="118" rx="8"/>
-  <text class="bt" x="520" y="620" text-anchor="middle">12 V battery</text>
+  <text class="bt" x="520" y="620" text-anchor="middle">3S 11.1 V</text>
 
   <!-- button + kill switch -->
   <circle cx="462" cy="716" r="15" fill="#2b3442" stroke="#141a22" stroke-width="2"/>
@@ -126,7 +126,7 @@
     <g><circle class="badge" cx="794" cy="296" r="12"/><text class="bt" x="794" y="300" text-anchor="middle">4</text><text class="pl" x="816" y="301">Caster / ball wheel — rear, free-rolling balance point</text></g>
     <g><circle class="badge" cx="794" cy="326" r="12"/><text class="bt" x="794" y="330" text-anchor="middle">5</text><text class="pl" x="816" y="331">ESP32 on breadboard — center deck</text></g>
     <g><circle class="badge" cx="794" cy="356" r="12"/><text class="bt" x="794" y="360" text-anchor="middle">6</text><text class="pl" x="816" y="361">TB6612FNG motor driver — near the motors</text></g>
-    <g><circle class="badge" cx="794" cy="386" r="12"/><text class="bt" x="794" y="390" text-anchor="middle">7</text><text class="pl" x="816" y="391">12 V battery — low &amp; central (keeps the CG low)</text></g>
+    <g><circle class="badge" cx="794" cy="386" r="12"/><text class="bt" x="794" y="390" text-anchor="middle">7</text><text class="pl" x="816" y="391">3S LiPo 11.1 V — low &amp; central (keeps the CG low)</text></g>
     <g><circle class="badge" cx="794" cy="416" r="12"/><text class="bt" x="794" y="420" text-anchor="middle">8</text><text class="pl" x="816" y="421">Buck 12 V→5 V (fixed) — feeds ESP32 5V/VIN</text></g>
     <g><circle class="badge" cx="794" cy="446" r="12"/><text class="bt" x="794" y="450" text-anchor="middle">9</text><text class="pl" x="816" y="451">Start/Stop button — reachable on the rear deck</text></g>
     <g><circle class="badge" cx="794" cy="476" r="12"/><text class="bt" x="794" y="480" text-anchor="middle">10</text><text class="pl" x="816" y="481">Power kill switch — hardware cutoff on the 12 V motor line</text></g>
@@ -164,7 +164,7 @@
 
   <!-- battery on deck -->
   <rect class="batt" x="950" y="690" width="110" height="54" rx="6"/>
-  <text class="bt" x="1005" y="722" text-anchor="middle">12 V</text>
+  <text class="bt" x="1005" y="722" text-anchor="middle">11.1 V</text>
 
   <!-- esp32/breadboard on deck -->
   <rect x="902" y="706" width="44" height="38" rx="4" fill="#f6eecd" stroke="#cdbd8e" stroke-width="2"/>

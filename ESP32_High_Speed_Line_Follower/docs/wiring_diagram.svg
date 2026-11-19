@@ -182,20 +182,20 @@
 
   <!-- battery -->
   <rect x="75" y="614" width="120" height="58" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
-  <text class="pinm" x="135" y="640" text-anchor="middle">12 V battery</text>
-  <text class="sub"  x="135" y="658" text-anchor="middle">(≈ motor voltage)</text>
+  <text class="pinm" x="135" y="640" text-anchor="middle">3S LiPo 11.1 V</text>
+  <text class="sub"  x="135" y="658" text-anchor="middle">(12.6 V full charge)</text>
   <text class="pinm" x="201" y="624">+</text>
   <text class="pinm" x="201" y="670">−</text>
 
   <!-- buck converter -->
   <rect x="75" y="726" width="150" height="56" rx="6" fill="#fff" stroke="#33415c" stroke-width="2"/>
-  <text class="pinm" x="150" y="750" text-anchor="middle">Buck 12 V → 5 V</text>
+  <text class="pinm" x="150" y="750" text-anchor="middle">Buck 11.1 V → 5 V</text>
   <text class="sub"  x="150" y="768" text-anchor="middle">(fixed 5 V module)</text>
 
   <!-- Batt+ -> TB6612 VM (orange, full 12 V) -->
   <path class="pvm" d="M195,622 H360 V600"/>
   <circle class="j" cx="195" cy="622" r="4"/>
-  <text class="pin" x="250" y="616" fill="#f08c00">VM = 12 V → TB6612</text>
+  <text class="pin" x="250" y="616" fill="#f08c00">VM = 11.1 V → TB6612</text>
 
   <!-- Batt+ -> buck input (orange) -->
   <path class="pvm" d="M195,652 H235 V726"/>
@@ -218,7 +218,7 @@
   <text class="noteb" x="150" y="854">COMMON GND</text>
   <text class="sub" x="150" y="880">ESP32 · QTR · TB6612 · battery − all tie here</text>
 
-  <text class="sub" x="70" y="606" fill="#f08c00">Never feed 12 V to ESP32 VIN. Bulk 470µF + 0.1µF across VM–GND at the driver.</text>
+  <text class="sub" x="70" y="606" fill="#f08c00">Never feed 11–12.6 V to ESP32 VIN. Bulk 470µF + 0.1µF across VM–GND at the driver.</text>
 
   <!-- ===================== LEGEND / NOTES ===================== -->
   <rect class="blk" x="800" y="520" width="450" height="370" rx="8"/>
