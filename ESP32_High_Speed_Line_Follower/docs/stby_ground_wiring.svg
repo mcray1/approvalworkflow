@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 880" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <style>
+    .bg{fill:#f4f7fb}
+    .blk{fill:#dfe9fb;stroke:#1f6feb;stroke-width:2.5}
+    .blk2{fill:#f6e0e0;stroke:#8f3131;stroke-width:2.5}
+    .bt{font-size:20px;font-weight:800;fill:#13203a}
+    .pin{font-size:14px;font-weight:700;fill:#13203a}
+    .lab{font-size:14px;font-weight:700}
+    .note{font-size:13px;fill:#1c2a44}
+    .s{font-size:12px;fill:#5a6b86}
+    .w{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+    .dot{fill:#13203a}
+  </style>
+  <rect class="bg" x="0" y="0" width="1200" height="880"/>
+  <rect x="0" y="0" width="1200" height="58" fill="#102a47"/>
+  <rect x="0" y="54" width="1200" height="4" fill="#1f6feb"/>
+  <text x="26" y="36" fill="#fff" font-size="23" font-weight="800">STBY &amp; Common Ground — wiring</text>
+
+  <!-- ===== CORRECT main diagram ===== -->
+  <text x="40" y="100" font-size="16" font-weight="800" fill="#2e8b57">✓ CORRECT</text>
+
+  <!-- ESP32 -->
+  <rect class="blk" x="110" y="170" width="220" height="250" rx="12"/>
+  <text class="bt" x="220" y="300" text-anchor="middle">ESP32</text>
+  <circle class="dot" cx="330" cy="225" r="5"/><text class="pin" x="322" y="230" text-anchor="end">3V3</text>
+  <circle class="dot" cx="330" cy="300" r="5"/><text class="pin" x="322" y="305" text-anchor="end">GPIO33</text>
+  <circle class="dot" cx="330" cy="395" r="5"/><text class="pin" x="322" y="400" text-anchor="end">GND</text>
+
+  <!-- TB6612 -->
+  <rect class="blk2" x="760" y="170" width="220" height="250" rx="12"/>
+  <text class="bt" x="870" y="300" text-anchor="middle">TB6612</text>
+  <circle class="dot" cx="760" cy="225" r="5"/><text class="pin" x="768" y="230">VCC</text>
+  <circle class="dot" cx="760" cy="300" r="5"/><text class="pin" x="768" y="305">STBY</text>
+  <circle class="dot" cx="760" cy="395" r="5"/><text class="pin" x="768" y="400">GND</text>
+  <circle class="dot" cx="840" cy="170" r="5"/><text class="pin" x="848" y="162">VM</text>
+
+  <!-- 3V3 -> VCC -->
+  <path class="w" stroke="#e23b2e" d="M330,225 H760"/>
+  <text class="lab" x="545" y="214" text-anchor="middle" fill="#e23b2e">3.3 V (logic)</text>
+
+  <!-- GPIO33 -> STBY (direct) with junction + pulldown -->
+  <path class="w" stroke="#8a2be2" d="M330,300 H760"/>
+  <text class="lab" x="545" y="289" text-anchor="middle" fill="#8a2be2">STBY control (direct wire)</text>
+  <circle class="dot" cx="545" cy="300" r="7"/>
+  <!-- 10k pulldown from node down to GND bus -->
+  <path class="w" stroke="#222831" stroke-width="5" d="M545,300 V345"/>
+  <polyline class="w" stroke="#13203a" stroke-width="4" points="545,345 532,352 558,362 532,372 558,382 545,389"/>
+  <text class="lab" x="565" y="372" fill="#13203a">10 kΩ</text>
+  <text class="s" x="565" y="390" fill="#5a6b86">pull-down</text>
+  <path class="w" stroke="#222831" stroke-width="5" d="M545,389 V560"/>
+
+  <!-- VM stub -->
+  <path class="w" stroke="#f08c00" d="M840,170 V120"/>
+  <text class="lab" x="848" y="112" fill="#c06a00">→ 11.1 V (motors)</text>
+
+  <!-- ===== COMMON GROUND BUS ===== -->
+  <path class="w" stroke="#222831" stroke-width="8" d="M120,560 H1010"/>
+  <text class="lab" x="120" y="600" fill="#222831">COMMON GROUND — everything ties here</text>
+  <!-- taps -->
+  <path class="w" stroke="#222831" stroke-width="5" d="M330,395 V560"/>   <!-- ESP32 GND -->
+  <path class="w" stroke="#222831" stroke-width="5" d="M760,395 V560"/>   <!-- TB6612 GND -->
+  <!-- battery - and buck stubs -->
+  <path class="w" stroke="#222831" stroke-width="5" d="M180,560 V620"/>
+  <text class="s" x="150" y="638">Battery −</text>
+  <path class="w" stroke="#222831" stroke-width="5" d="M960,560 V620"/>
+  <text class="s" x="930" y="638">Buck GND</text>
+  <circle class="dot" cx="545" cy="560" r="6"/>
+  <circle class="dot" cx="330" cy="560" r="6"/>
+  <circle class="dot" cx="760" cy="560" r="6"/>
+
+  <!-- how it behaves -->
+  <rect x="110" y="668" width="700" height="150" rx="10" fill="#ffffff" stroke="#b9c3d2" stroke-width="1.5"/>
+  <text class="bt" x="128" y="700" font-size="16">How STBY works</text>
+  <text class="note" x="128" y="728">• GPIO33 wires <tspan font-weight="800">directly</tspan> to STBY (no resistor between them).</text>
+  <text class="note" x="128" y="752">• The 10 kΩ goes from that STBY node to <tspan font-weight="800">GND</tspan> (a “pull-down”).</text>
+  <text class="note" x="128" y="776">• At power-up the pull-down holds STBY <tspan font-weight="800">LOW → driver OFF</tspan> (safe).</text>
+  <text class="note" x="128" y="800">• The firmware drives GPIO33 <tspan font-weight="800">HIGH → STBY 3.3 V → driver ON</tspan> when it arms.</text>
+
+  <!-- ===== WRONG inset ===== -->
+  <rect x="850" y="668" width="320" height="150" rx="10" fill="#fbeaea" stroke="#b23b3b" stroke-width="2"/>
+  <text x="868" y="700" font-size="16" font-weight="800" fill="#b23b3b">✗ WRONG (what you had)</text>
+  <text class="s" x="868" y="724" fill="#7a1f1f">resistor in SERIES between them:</text>
+  <!-- GPIO33 to STBY through a series 10k (the wrong way) -->
+  <text class="pin" x="868" y="770">GPIO33</text>
+  <path class="w" stroke="#8a2be2" stroke-width="4" d="M932,765 H958"/>
+  <polyline class="w" stroke="#13203a" stroke-width="3" points="958,765 966,759 982,771 966,777 982,783 990,765 1006,765"/>
+  <text class="pin" x="1012" y="770">STBY</text>
+  <text class="s" x="868" y="800" fill="#7a1f1f">no wire direct, nothing to GND → unreliable.</text>
+
+  <text class="s" x="40" y="862">STBY is a pull-DOWN (to GND). The button on GPIO34 is the opposite: a pull-UP (to 3.3 V). Don't mix them up.</text>
+</svg>
