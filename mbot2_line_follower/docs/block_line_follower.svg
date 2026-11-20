@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" font-family="'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <style>
+    .bg{fill:#f4f7fb}
+    .t{fill:#ffffff;font-size:15px;font-weight:700}
+    .c{fill:#ffeccc;font-size:13px;font-style:italic}
+    .cap{fill:#13203a;font-size:13px}
+    .h{fill:#13203a;font-size:15px;font-weight:800}
+  </style>
+  <rect class="bg" x="0" y="0" width="1240" height="840"/>
+  <rect x="0" y="0" width="1240" height="52" fill="#102a47"/>
+  <rect x="0" y="48" width="1240" height="4" fill="#1f6feb"/>
+  <text x="24" y="33" fill="#fff" font-size="21" font-weight="800">mBot2 Line Follower — block script (rebuild in mBlock)</text>
+
+  <!-- blocks: each a rounded rect; indentation shows nesting -->
+  <!-- y = 72 + i*44 ; x = 30 + indent*26 ; right edge 1190 -->
+
+  <!-- 0 events -->
+  <rect x="30" y="72" width="1160" height="34" rx="8" fill="#8c6239"/>
+  <text class="t" x="44" y="94">when CyberPi starts up</text>
+
+  <!-- 1 forever -->
+  <rect x="56" y="116" width="1134" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="70" y="138">forever</text>
+
+  <!-- 2 wait until A -->
+  <rect x="82" y="160" width="1108" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="96" y="182">wait until ⟨ button A pressed? ⟩ <tspan class="c">// press A to start</tspan></text>
+
+  <!-- 2 print RUN -->
+  <rect x="82" y="204" width="1108" height="34" rx="8" fill="#3d9be9"/>
+  <text class="t" x="96" y="226">CyberPi  print  “RUN”</text>
+
+  <!-- 2 repeat until B -->
+  <rect x="82" y="248" width="1108" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="96" y="270">repeat until ⟨ button B pressed? ⟩ <tspan class="c">// run until B stops it</tspan></text>
+
+  <!-- 3 set offset -->
+  <rect x="108" y="292" width="1082" height="34" rx="8" fill="#cc5b22"/>
+  <text class="t" x="122" y="314">set  offset  to ( quad rgb sensor 1 · line-following offset ) <tspan class="c">// where is the line?</tspan></text>
+
+  <!-- 3 if offset>20 -->
+  <rect x="108" y="336" width="1082" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="122" y="358">if ⟨ offset &gt; 20 ⟩ then <tspan class="c">// line is to the RIGHT</tspan></text>
+
+  <!-- 4 drive right -->
+  <rect x="134" y="380" width="1056" height="34" rx="8" fill="#1aa0a0"/>
+  <text class="t" x="148" y="402">drive   left wheel 40   right wheel 12 <tspan class="c">// turn right</tspan></text>
+
+  <!-- 3 else -->
+  <rect x="108" y="424" width="1082" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="122" y="446">else</text>
+
+  <!-- 4 if offset<-20 -->
+  <rect x="134" y="468" width="1056" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="148" y="490">if ⟨ offset &lt; -20 ⟩ then <tspan class="c">// line is to the LEFT</tspan></text>
+
+  <!-- 5 drive left -->
+  <rect x="160" y="512" width="1030" height="34" rx="8" fill="#1aa0a0"/>
+  <text class="t" x="174" y="534">drive   left wheel 12   right wheel 40 <tspan class="c">// turn left</tspan></text>
+
+  <!-- 4 else -->
+  <rect x="134" y="556" width="1056" height="34" rx="8" fill="#ef9f1c"/>
+  <text class="t" x="148" y="578">else</text>
+
+  <!-- 5 drive straight -->
+  <rect x="160" y="600" width="1030" height="34" rx="8" fill="#1aa0a0"/>
+  <text class="t" x="174" y="622">drive   left wheel 40   right wheel 40 <tspan class="c">// go straight (centered)</tspan></text>
+
+  <!-- 2 drive stop -->
+  <rect x="82" y="644" width="1108" height="34" rx="8" fill="#1aa0a0"/>
+  <text class="t" x="96" y="666">drive   left wheel 0   right wheel 0 <tspan class="c">// stopped</tspan></text>
+
+  <!-- 2 print STOP -->
+  <rect x="82" y="688" width="1108" height="34" rx="8" fill="#3d9be9"/>
+  <text class="t" x="96" y="710">CyberPi  print  “STOP”</text>
+
+  <!-- legend -->
+  <text class="h" x="30" y="752">Block palettes:</text>
+  <rect x="150" y="740" width="16" height="16" rx="3" fill="#8c6239"/><text class="cap" x="172" y="753">Events</text>
+  <rect x="240" y="740" width="16" height="16" rx="3" fill="#ef9f1c"/><text class="cap" x="262" y="753">Control</text>
+  <rect x="335" y="740" width="16" height="16" rx="3" fill="#cc5b22"/><text class="cap" x="357" y="753">Variables</text>
+  <rect x="440" y="740" width="16" height="16" rx="3" fill="#1aa0a0"/><text class="cap" x="462" y="753">mBot2 motors</text>
+  <rect x="575" y="740" width="16" height="16" rx="3" fill="#3d9be9"/><text class="cap" x="597" y="753">CyberPi (print / button)</text>
+
+  <text class="cap" x="30" y="790">Indentation = nesting. The ⟨ … ⟩ shapes are boolean/reporter blocks dropped into the slots. Make a variable called “offset”.</text>
+  <text class="cap" x="30" y="812">Turn the wrong way? swap the two drive numbers in “turn right” and “turn left”.  Too wobbly/slow? change 40 / 12 / 20.</text>
+</svg>
