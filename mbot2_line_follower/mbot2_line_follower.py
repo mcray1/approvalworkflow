@@ -139,7 +139,8 @@ def follow_step(dt):
     global integral, last_err, lost_at
 
     # Which of the 4 probes currently see the line (0 = none -> lost).
-    station = quad_rgb_sensor.get_line_station(SENSOR_IDX)
+    # NOTE: this firmware's method is get_line_sta (not get_line_station).
+    station = quad_rgb_sensor.get_line_sta(SENSOR_IDX)
 
     if station == 0:
         # ---- line lost: search toward the last-known side, then time out ----
