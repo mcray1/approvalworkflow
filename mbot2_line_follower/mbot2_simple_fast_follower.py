@@ -1,7 +1,6 @@
 # =============================================================================
-#  mBot2 Line Follower — SIMPLE but FAST  (with lost-line recovery)
-#  PD steering + one 2-level speed. If the line is lost, it keeps turning the
-#  way it was already turning until it finds the line again.
+#  mBot2 Line Follower — SIMPLE but FAST
+#  PD steering + 2-level speed + gradual acceleration + lost-line recovery.
 # -----------------------------------------------------------------------------
 #  Platform : Makeblock mBot2 (CyberPi + Quad RGB Line-Following Sensor)
 #  Controls : Button A = start,  Button B = stop
@@ -18,6 +17,10 @@ STRAIGHT_POWER = 75    # power when the line is roughly centered
 TURN_POWER     = 45    # power when it's clearly turning
 TURN_OFFSET    = 25    # |offset| above this counts as "a turn"
 MAX_MOTOR      = 95    # hard cap per motor
+
+# ---- ACCELERATION ----
+ACCEL_STEP = 4         # max power INCREASE per loop (lower = smoother/slower
+                       # speed-up). Slowing down is always instant.
 
 # ---- PD STEERING ----
 KP = 0.5
@@ -57,6 +60,7 @@ def run():
         previous_offset = 0
         last_turn = 1          # +1 or -1: the way it was last turning
         lost_steps = 0
+        current_power = 0      # ramps up gradually from a standstill
         cyberpi.console.println("RUNNING")
 
         # --- follow until B ---
@@ -73,24 +77,32 @@ def run():
                     break
                 # keep turning the SAME way it was turning before it lost the line
                 drive(SEARCH_POWER * last_turn, -SEARCH_POWER * last_turn)
+                current_power = 0        # so it ramps up again after recovering
                 time.sleep(LOOP_DELAY)
                 continue
 
             lost_steps = 0
 
-            # ---- normal following ----
+            # ---- read line position + PD steering ----
             offset = mbuild.quad_rgb_sensor.get_offset_track(1)   # -100..+100
             change = offset - previous_offset
             previous_offset = offset
 
             steer = clamp(KP * offset + KD * change, -MAX_STEER, MAX_STEER)
 
+            # ---- choose the target speed ----
             if abs(offset) > TURN_OFFSET:
-                power = TURN_POWER
+                target_power = TURN_POWER
             else:
-                power = STRAIGHT_POWER
+                target_power = STRAIGHT_POWER
 
-            drive(power - steer, power + steer)
+            # ---- ramp toward it: speed UP gradually, slow DOWN instantly ----
+            if target_power > current_power:
+                current_power = min(target_power, current_power + ACCEL_STEP)
+            else:
+                current_power = target_power
+
+            drive(current_power - steer, current_power + steer)
 
             # remember which way it's turning, for the next time the line is lost
             if offset < -7:
