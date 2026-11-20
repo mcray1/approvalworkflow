@@ -50,7 +50,6 @@ sel       = 0          # index into ORDER (which value is selected)
 integral  = 0.0
 last_err  = 0.0
 lost_at   = None       # ticks_ms when the line was first lost
-last_draw = 0
 
 # remember previous button/joystick states for edge detection (one action/press)
 prev = {"a": False, "b": False, "up": False, "down": False,
@@ -70,18 +69,19 @@ def pressed(key):
 
 
 def draw():
-    """Render the on-screen menu. Labels reuse fixed indices so they update
-    in place. Text is space-padded so shorter values don't leave artifacts."""
-    cyberpi.display.show_label("mBot2 LINE PID", 14, 2, 2, 1)
-    state = "RUNNING" if running else "STOPPED"
-    cyberpi.display.show_label("State: " + state + "   ", 12, 2, 22, 2)
+    """Render the on-screen menu using the CyberPi console (version-proof —
+    avoids show_label's firmware-specific argument signature). The screen is
+    cleared and the menu reprinted on each call."""
+    cyberpi.display.clear()
+    cyberpi.console.println("mBot2 LINE PID")
+    cyberpi.console.println("State: " + ("RUNNING" if running else "STOPPED"))
     for i, name in enumerate(ORDER):
         cursor = ">" if i == sel else " "
-        val = params[name]
-        txt = ("%s %s: %.2f  " % (cursor, name, val)) if name != "Base" \
-              else ("%s %s: %d   " % (cursor, name, int(val)))
-        cyberpi.display.show_label(txt, 12, 2, 40 + i * 16, 3 + i)
-    cyberpi.display.show_label("A=Start B=Stop", 10, 2, 112, 8)
+        if name == "Base":
+            cyberpi.console.println("%s %s: %d" % (cursor, name, int(params[name])))
+        else:
+            cyberpi.console.println("%s %s: %.2f" % (cursor, name, params[name]))
+    cyberpi.console.println("A=Start B=Stop")
 
 
 def handle_input():
@@ -178,8 +178,9 @@ def stop(reason=""):
     global running
     running = False
     mbot2.drive_speed(0, 0)
+    draw()
     if reason:
-        cyberpi.display.show_label(reason + "      ", 12, 2, 22, 2)
+        cyberpi.console.println(reason)
     try:
         cyberpi.audio.play("exclaim")
     except Exception:
@@ -188,14 +189,16 @@ def stop(reason=""):
 
 # ----------------------------- main ------------------------------------------
 def main():
-    global last_draw
     cyberpi.display.clear()
     mbot2.drive_speed(0, 0)
     draw()
 
     last = time.ticks_ms()
     while True:
-        redraw = handle_input()
+        # Redraw only when something changed (clear+reprint is slow, and the
+        # menu doesn't change mid-run), so the control loop stays fast.
+        if handle_input():
+            draw()
 
         now = time.ticks_ms()
         dt = time.ticks_diff(now, last) / 1000.0
@@ -207,11 +210,6 @@ def main():
             follow_step(dt)
         else:
             mbot2.drive_speed(0, 0)
-
-        # redraw on any input, or ~6x/sec so the loop stays fast while running
-        if redraw or time.ticks_diff(now, last_draw) > 160:
-            draw()
-            last_draw = now
 
         time.sleep(0.008)   # ~100+ Hz control loop
 
