@@ -1,6 +1,7 @@
 # =============================================================================
-#  mBot2 Line Follower — SIMPLE but FAST
-#  (PD steering + one 2-level speed; wrapped to print the real error if any)
+#  mBot2 Line Follower — SIMPLE but FAST  (with lost-line recovery)
+#  PD steering + one 2-level speed. If the line is lost, it keeps turning the
+#  way it was already turning until it finds the line again.
 # -----------------------------------------------------------------------------
 #  Platform : Makeblock mBot2 (CyberPi + Quad RGB Line-Following Sensor)
 #  Controls : Button A = start,  Button B = stop
@@ -23,6 +24,11 @@ KP = 0.5
 KD = 4
 MAX_STEER = 90
 
+# ---- LOST-LINE RECOVERY ----
+SEARCH_POWER   = 35    # pivot power while hunting for the line
+MAX_LOST_STEPS = 200   # safety: stop if still lost after this many loops
+                       #         (set to 0 to search forever until B)
+
 LOOP_DELAY = 0.01
 
 
@@ -31,7 +37,7 @@ def clamp(value, low, high):
 
 
 def stop_motors():
-    mbot2.drive_power(0, 0)      # reliable stop (no EM_stop argument needed)
+    mbot2.drive_power(0, 0)
 
 
 def drive(left, right):
@@ -49,17 +55,30 @@ def run():
             time.sleep(0.05)
 
         previous_offset = 0
+        last_turn = 1          # +1 or -1: the way it was last turning
+        lost_steps = 0
         cyberpi.console.println("RUNNING")
 
         # --- follow until B ---
         while not cyberpi.controller.is_press("b"):
 
-            # stop if the line is completely lost (all 4 probes off)
-            if mbuild.quad_rgb_sensor.get_line_sta(1) == 15:
-                stop_motors()
-                cyberpi.console.println("LINE LOST")
-                break
+            state = mbuild.quad_rgb_sensor.get_line_sta(1)
 
+            # ---- line completely lost (all 4 probes off) ----
+            if state == 15:
+                lost_steps += 1
+                if MAX_LOST_STEPS and lost_steps > MAX_LOST_STEPS:
+                    stop_motors()
+                    cyberpi.console.println("LINE LOST")
+                    break
+                # keep turning the SAME way it was turning before it lost the line
+                drive(SEARCH_POWER * last_turn, -SEARCH_POWER * last_turn)
+                time.sleep(LOOP_DELAY)
+                continue
+
+            lost_steps = 0
+
+            # ---- normal following ----
             offset = mbuild.quad_rgb_sensor.get_offset_track(1)   # -100..+100
             change = offset - previous_offset
             previous_offset = offset
@@ -72,6 +91,13 @@ def run():
                 power = STRAIGHT_POWER
 
             drive(power - steer, power + steer)
+
+            # remember which way it's turning, for the next time the line is lost
+            if offset < -7:
+                last_turn = 1
+            elif offset > 7:
+                last_turn = -1
+
             time.sleep(LOOP_DELAY)
 
         # --- stopped ---
@@ -93,6 +119,6 @@ except Exception as e:
     except Exception:
         pass
     try:
-        sys.print_exception(e)     # full traceback to the serial monitor
+        sys.print_exception(e)
     except Exception:
         pass
